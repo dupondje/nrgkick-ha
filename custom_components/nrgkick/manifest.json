@@ -1,0 +1,15 @@
+{
+  "domain": "nrgkick",
+  "name": "NRGKick",
+  "codeowners": [
+    "@dupondje"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/nrgkick",
+  "homekit": {},
+  "iot_class": "local_polling",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": []
+}

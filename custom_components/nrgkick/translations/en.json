@@ -1,0 +1,65 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "ip": "IP address",
+                    "uuid": "UUID"
+                }
+            }
+        }
+    },
+    "entity": {
+        "number": {
+            "charge_current_limit": {
+                "name": "Charge current limit"
+            }
+        },
+        "sensor": {
+            "charged_energy": {
+                "name": "Charged energy"
+            },
+            "charging_state": {
+                "name": "Charging state"
+            },
+            "current_charging_current": {
+                "name": "Current charging current"
+            },
+            "current_charging_power": {
+                "name": "Current charging power"
+            },
+            "current_charging_power_phase_a": {
+                "name": "Current charging power Phase A"
+            },
+            "current_charging_power_phase_b": {
+                "name": "Current charging power Phase B"
+            },
+            "current_charging_power_phase_c": {
+                "name": "Current charging power Phase C"
+            },
+            "current_grid_frequency": {
+                "name": "Current grid frequency"
+            },
+            "peak_charging_power": {
+                "name": "Peak charging power"
+            },
+            "total_charged_energy": {
+                "name": "Total charged energy"
+            },
+            "total_charging_cycles": {
+                "name": "Total charging cycles"
+            },
+            "wifi_network": {
+                "name": "WiFi Network"
+            }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "ip": "[%key:common::config_flow::data::ip%]",
+          "uuid": "UUID"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  },
+  "entity": {
+    "number": {
+      "charge_current_limit": {
+        "name": "Charge current limit"
+      }
+    },
+    "sensor": {
+      "current_grid_frequency": {
+        "name": "Current grid frequency"
+      },
+      "peak_charging_power": {
+        "name": "Peak charging power"
+      },
+      "current_charging_power": {
+        "name": "Current charging power"
+      },
+      "charged_energy": {
+        "name": "Charged energy"
+      },
+      "total_charged_energy": {
+        "name": "Total charged energy"
+      },
+      "current_charging_power_phase_a": {
+        "name": "Current charging power Phase A"
+      },
+      "current_charging_power_phase_b": {
+        "name": "Current charging power Phase B"
+      },
+      "current_charging_power_phase_c": {
+        "name": "Current charging power Phase C"
+      },
+      "current_charging_current": {
+        "name": "Current charging current"
+      },
+      "charging_state": {
+        "name": "Charging state"
+      },
+      "total_charging_cycles": {
+        "name": "Total charging cycles"
+      },
+      "wifi_network": {
+        "name": "WiFi Network"
+      }
+    }
+  }
+}
