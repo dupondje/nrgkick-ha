@@ -68,10 +68,14 @@ class NRGKickSwitch(NRGKickEntity, SwitchEntity):
 
     async def async_turn_on(self):
         """Turn on charging."""
-        await self.entity_description.switch_fn(self.coordinator.api, True)
-        await self.coordinator.async_refresh()
+        await self.entity_description.switch_fn(self.coordinator.websocket, True)
+        # There is some delay between the response on the SET
+        # and the CHARGECONTROL_SETTINGS_GET value to get updated
+        await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self):
         """Turn off charging."""
-        await self.entity_description.switch_fn(self.coordinator.api, False)
-        await self.coordinator.async_refresh()
+        await self.entity_description.switch_fn(self.coordinator.websocket, False)
+        # There is some delay between the response on the SET
+        # and the CHARGECONTROL_SETTINGS_GET value to get updated
+        await self.coordinator.async_request_refresh()
