@@ -51,6 +51,9 @@
       "current_charging_current": {
         "name": "Current charging current"
       },
+      "charge_current_limit": {
+        "name": "Charge current limit"
+      },
       "charging_state": {
         "name": "Charging state"
       },
@@ -59,6 +62,11 @@
       },
       "wifi_network": {
         "name": "WiFi Network"
+      }
+    },
+    "switch": {
+      "charging_state": {
+        "name": "Charging state"
       }
     }
   }

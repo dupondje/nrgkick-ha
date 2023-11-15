@@ -1,13 +1,14 @@
+"""NRGKick coordinator class."""
+
 from datetime import timedelta
 import logging
 from typing import Any
 
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN
-
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -37,7 +38,7 @@ class NRGKickCoordinator(DataUpdateCoordinator):
             data["cc_s"] = await self.websocket.get_charge_control_settings()
             data["w_s"] = await self.websocket.get_wifi_status()
             return data
-        except:
+        except Exception:
             # Raising ConfigEntryAuthFailed will cancel future updates
             # and start a config flow with SOURCE_REAUTH (async_step_reauth)
             raise ConfigEntryAuthFailed

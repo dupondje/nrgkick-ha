@@ -80,4 +80,4 @@ class NRGKickNumber(NRGKickEntity, NumberEntity):
             value,
         )
         await self.entity_description.api_fn(self.coordinator.websocket, value)
-        self.coordinator.async_update_listeners()
+        await self.coordinator.async_refresh()

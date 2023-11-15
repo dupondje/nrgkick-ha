@@ -7,12 +7,12 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant import config_entries
-from .websocket import NRGKickWebsocket
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
 from .const import DOMAIN
+from .websocket import NRGKickWebsocket
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -36,10 +36,12 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     try:
         await nrgkicksocket.connect()
         details = await nrgkicksocket.get_device_control_info()
-    except:
+    except Exception:  # pylint: disable=broad-except
         raise CannotConnect
 
     # Return info that you want to store in the config entry.
+    if details is None:
+        raise CannotConnect
     return {"serial": details.serialNumber, "name": details.deviceName.value}
 
 

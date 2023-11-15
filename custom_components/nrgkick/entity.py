@@ -1,4 +1,6 @@
-from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
+"""NRGKick entity class."""
+
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import EntityDescription
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
@@ -28,13 +30,14 @@ class NRGKickEntity(CoordinatorEntity[NRGKickCoordinator]):
         super().__init__(coordinator)
         self.entity_description = description
 
-        serial = coordinator.config_entry.data["serial"]
-        dev_name = coordinator.config_entry.data["name"]
-        self._attr_unique_id = f"{serial}_{description.key}"
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, serial)},
-            manufacturer="DiniTech",
-            model="NRGKick",
-            name=dev_name,
-            serial_number=serial,
-        )
+        if coordinator.config_entry:
+            serial = coordinator.config_entry.data["serial"]
+            dev_name = coordinator.config_entry.data["name"]
+            self._attr_unique_id = f"{serial}_{description.key}"
+            self._attr_device_info = DeviceInfo(
+                identifiers={(DOMAIN, serial)},
+                manufacturer="DiniTech",
+                model="NRGKick",
+                name=dev_name,
+                serial_number=serial,
+            )
