@@ -5,8 +5,7 @@ import logging
 from typing import Any
 
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryAuthFailed
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN
 
@@ -39,6 +38,5 @@ class NRGKickCoordinator(DataUpdateCoordinator):
             data["w_s"] = await self.websocket.get_wifi_status()
             return data
         except Exception:
-            # Raising ConfigEntryAuthFailed will cancel future updates
-            # and start a config flow with SOURCE_REAUTH (async_step_reauth)
-            raise ConfigEntryAuthFailed
+            # Most likely a connection issue. Retry later
+            raise UpdateFailed
