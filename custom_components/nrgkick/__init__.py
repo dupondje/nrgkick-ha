@@ -16,7 +16,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up NRGKick from a config entry."""
 
     websocket = NRGKickWebsocket(entry.data["ip"], entry.data["uuid"])
-    await websocket.connect()
+    websocket.connect()
 
     coordinator = NRGKickCoordinator(hass, websocket)
 

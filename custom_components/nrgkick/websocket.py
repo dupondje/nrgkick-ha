@@ -41,7 +41,7 @@ class NRGKickWebsocket:
         """Stop the connection."""
         self._running = False
 
-    async def connect(self) -> None:
+    def connect(self) -> None:
         """Connect to the NRGKick device."""
         self._receive_task = asyncio.create_task(self.__connect_loop())
 
@@ -99,8 +99,8 @@ class NRGKickWebsocket:
         request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
         request.header.property = nrgcp.Nrgcp.Header.Property.DYNAMIC_VALUES
 
-        await self.__send(event, request)
         async with asyncio.timeout(5):
+            await self.__send(event, request)
             await event.wait()
 
         data = self._responses.pop(str(request.metadata.requestId))
@@ -118,8 +118,8 @@ class NRGKickWebsocket:
         request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
         request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
 
-        await self.__send(event, request)
         async with asyncio.timeout(5):
+            await self.__send(event, request)
             await event.wait()
 
         data = self._responses.pop(str(request.metadata.requestId))
@@ -137,8 +137,8 @@ class NRGKickWebsocket:
         request.header.service = nrgcp.Nrgcp.Header.Service.DEVICE_CONTROL
         request.header.property = nrgcp.Nrgcp.Header.Property.INFO
 
-        await self.__send(event, request)
         async with asyncio.timeout(5):
+            await self.__send(event, request)
             await event.wait()
 
         data = self._responses.pop(str(request.metadata.requestId))
@@ -156,8 +156,8 @@ class NRGKickWebsocket:
         request.header.service = nrgcp.Nrgcp.Header.Service.WIFI
         request.header.property = nrgcp.Nrgcp.Header.Property.STATUS
 
-        await self.__send(event, request)
         async with asyncio.timeout(5):
+            await self.__send(event, request)
             await event.wait()
 
         data = self._responses.pop(str(request.metadata.requestId))
@@ -176,8 +176,8 @@ class NRGKickWebsocket:
 
         request.payload.CHARGECONTROL_SETTINGS_UPDATE.chargeCurrent.userSet = limit
 
-        await self.__send(event, request)
         async with asyncio.timeout(5):
+            await self.__send(event, request)
             await event.wait()
 
         data = self._responses.pop(str(request.metadata.requestId))
@@ -196,8 +196,8 @@ class NRGKickWebsocket:
 
         request.payload.CHARGECONTROL_SETTINGS_UPDATE.chargingState.value = state
 
-        await self.__send(event, request)
         async with asyncio.timeout(5):
+            await self.__send(event, request)
             await event.wait()
 
         data = self._responses.pop(str(request.metadata.requestId))

@@ -34,7 +34,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     details = None
 
     try:
-        await nrgkicksocket.connect()
+        nrgkicksocket.connect()
         details = await nrgkicksocket.get_device_control_info()
     except Exception:  # pylint: disable=broad-except
         raise CannotConnect
