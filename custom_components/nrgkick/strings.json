@@ -57,6 +57,9 @@
       "charging_state": {
         "name": "Charging state"
       },
+      "control_pilot_status": {
+        "name": "Control Pilot status"
+      },
       "total_charging_cycles": {
         "name": "Total charging cycles"
       },

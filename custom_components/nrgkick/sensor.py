@@ -68,6 +68,15 @@ SENSORS = [
         value_fn=lambda data: data["cc_dv"].chargingData.chargingPower,
     ),
     NRGKickSensorEntityDescription(
+        key="current_charging_current",
+        translation_key="current_charging_current",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.CURRENT,
+        native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
+        suggested_display_precision=2,
+        value_fn=lambda data: data["cc_dv"].chargingData.chargingRate,
+    ),
+    NRGKickSensorEntityDescription(
         key="charged_energy",
         translation_key="charged_energy",
         state_class=SensorStateClass.TOTAL,
@@ -116,15 +125,6 @@ SENSORS = [
     ),
     # Charge Control Settings
     NRGKickSensorEntityDescription(
-        key="current_charging_current",
-        translation_key="current_charging_current",
-        state_class=SensorStateClass.MEASUREMENT,
-        device_class=SensorDeviceClass.CURRENT,
-        native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
-        suggested_display_precision=2,
-        value_fn=lambda data: data["cc_s"].chargeCurrent.value,
-    ),
-    NRGKickSensorEntityDescription(
         key="charge_current_limit",
         translation_key="charge_current_limit",
         state_class=SensorStateClass.MEASUREMENT,
@@ -139,6 +139,11 @@ SENSORS = [
         value_fn=lambda data: nrgcp.NrgcpTypes.ChargingState.Name(
             data["cc_s"].chargingState.value
         ),
+    ),
+    NRGKickSensorEntityDescription(
+        key="control_pilot_status",
+        translation_key="control_pilot_status",
+        value_fn=lambda data: nrgcp.NrgcpTypes.CpStatus.Name(data["cc_s"].cpStatus),
     ),
     NRGKickSensorEntityDescription(
         key="total_charging_cycles",

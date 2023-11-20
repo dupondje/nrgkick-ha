@@ -33,6 +33,9 @@
             "charging_state": {
                 "name": "Charging state"
             },
+            "control_pilot_status": {
+                "name": "Control Pilot status"
+            },
             "current_charging_current": {
                 "name": "Current charging current"
             },
