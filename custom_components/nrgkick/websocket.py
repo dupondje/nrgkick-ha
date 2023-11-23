@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 class NRGKickWebsocket:
     """Definition of a NRGKickWebsocket."""
 
-    def __init__(self, _ip: str, _uuid: str) -> None:
+    def __init__(self, _ip: str, _uuid: str | None) -> None:
         """Init NRGKickWebsocket."""
         self._ip = _ip
         self._uuid = _uuid
@@ -40,6 +40,8 @@ class NRGKickWebsocket:
     def stop(self) -> None:
         """Stop the connection."""
         self._running = False
+        if self._receive_task:
+            self._receive_task.cancel()
 
     def connect(self) -> None:
         """Connect to the NRGKick device."""
@@ -83,7 +85,8 @@ class NRGKickWebsocket:
     def __get_base_request(self) -> nrgcp.Nrgcp:
         request = nrgcp.Nrgcp()
         request.header.type = nrgcp.Nrgcp.Header.Type.GET
-        request.header.uuid = self.uuid
+        if self.uuid:
+            request.header.uuid = self.uuid
 
         request.metadata.requestId = str(uuid.uuid4())[-8:]
 
@@ -186,7 +189,7 @@ class NRGKickWebsocket:
         return True
 
     async def set_charging_state(self, state: nrgcp.NrgcpTypes.ChargingState) -> bool:
-        """Set the charging ."""
+        """Set the charging state."""
         event = asyncio.Event()
 
         request = self.__get_base_request()
@@ -211,3 +214,33 @@ class NRGKickWebsocket:
         if state:
             nrgcpState = nrgcp.NrgcpTypes.ChargingState.CHARGING
         return await self.set_charging_state(nrgcpState)
+
+    async def create_uuid(self, pin: str) -> str | None:
+        """Create a new UUID."""
+        event = asyncio.Event()
+
+        request = self.__get_base_request()
+
+        request.header.type = nrgcp.Nrgcp.Header.Type.UPDATE
+        request.header.service = nrgcp.Nrgcp.Header.Service.DEVICE_CONTROL
+        request.header.property = nrgcp.Nrgcp.Header.Property.INFO
+
+        devUUID = str(uuid.uuid4())
+
+        request.payload.DEVICECONTROL_INFO_UPDATE.devicePin.accessControlState = (
+            nrgcp.NrgcpTypes.AccessControlState.AUTHORIZE_CLIENT
+        )
+        request.payload.DEVICECONTROL_INFO_UPDATE.devicePin.pin = pin
+        request.payload.DEVICECONTROL_INFO_UPDATE.devicePin.uuid = devUUID
+
+        async with asyncio.timeout(5):
+            await self.__send(event, request)
+            await event.wait()
+
+        data = self._responses.pop(str(request.metadata.requestId))
+        if data is None:
+            return None
+
+        if data.header.status != nrgcp.Nrgcp.Header.Status.ACCEPTED:
+            return None
+        return devUUID

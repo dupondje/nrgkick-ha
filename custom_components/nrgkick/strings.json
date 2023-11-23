@@ -4,12 +4,15 @@
       "user": {
         "data": {
           "ip": "[%key:common::config_flow::data::ip%]",
+          "pin": "PIN",
           "uuid": "UUID"
         }
       }
     },
     "error": {
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "missing_uuid_or_pin": "Missing UUID or PIN",
+      "cannot_create_uuid": "Cannot create a new UUID",
       "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
