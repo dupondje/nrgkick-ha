@@ -27,35 +27,71 @@
       }
     },
     "sensor": {
-      "current_grid_frequency": {
-        "name": "Current grid frequency"
+      "charged_energy": {
+        "name": "Charged energy"
+      },
+      "charging_power": {
+        "name": "Charging power"
+      },
+      "charging_rate": {
+        "name": "Charging rate"
+      },
+      "charging_voltage": {
+        "name": "Charging voltage"
+      },
+      "grid_frequency": {
+        "name": "Grid frequency"
       },
       "peak_charging_power": {
         "name": "Peak charging power"
       },
-      "current_charging_power": {
-        "name": "Current charging power"
+      "charging_current_phase_a": {
+        "name": "Charging current Phase A"
       },
-      "charged_energy": {
-        "name": "Charged energy"
+      "charging_power_phase_a": {
+        "name": "Charging power Phase A"
+      },
+      "voltage_phase_a": {
+        "name": "Voltage Phase A"
+      },
+      "charging_current_phase_b": {
+        "name": "Charging current Phase B"
+      },
+      "charging_power_phase_b": {
+        "name": "Charging power Phase B"
+      },
+      "voltage_phase_b": {
+        "name": "Voltage Phase B"
+      },
+      "charging_current_phase_c": {
+        "name": "Charging current Phase C"
+      },
+      "charging_power_phase_c": {
+        "name": "Charging power Phase C"
+      },
+      "voltage_phase_c": {
+        "name": "Voltage Phase C"
       },
       "total_charged_energy": {
         "name": "Total charged energy"
       },
-      "current_charging_power_phase_a": {
-        "name": "Current charging power Phase A"
+      "charge_current_max_adapter": {
+        "name": "Charge current adapter max"
       },
-      "current_charging_power_phase_b": {
-        "name": "Current charging power Phase B"
+      "charge_current_max": {
+        "name": "Charge current max"
       },
-      "current_charging_power_phase_c": {
-        "name": "Current charging power Phase C"
+      "charge_current_min": {
+        "name": "Charge current min"
       },
-      "current_charging_current": {
-        "name": "Current charging current"
+      "charge_current_user_set": {
+        "name": "Charge current user set"
       },
-      "charge_current_limit": {
-        "name": "Charge current limit"
+      "charge_current_value": {
+        "name": "Charge current value"
+      },
+      "total_charging_cycles": {
+        "name": "Total charging cycles"
       },
       "charging_state": {
         "name": "Charging state"
@@ -63,8 +99,17 @@
       "control_pilot_status": {
         "name": "Control Pilot status"
       },
-      "total_charging_cycles": {
-        "name": "Total charging cycles"
+      "energy_limit_limited": {
+        "name": "Energy limit setting"
+      },
+      "energy_limit_max": {
+        "name": "Energy limit max"
+      },
+      "energy_limit_min": {
+        "name": "Energy limit min"
+      },
+      "energy_limit_value": {
+        "name": "Energy limit value"
       },
       "wifi_network": {
         "name": "WiFi Network"

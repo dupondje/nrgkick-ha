@@ -27,35 +27,71 @@
             }
         },
         "sensor": {
-            "charge_current_limit": {
-                "name": "Charge current limit"
+            "charge_current_max": {
+                "name": "Charge current max"
+            },
+            "charge_current_max_adapter": {
+                "name": "Charge current adapter max"
+            },
+            "charge_current_min": {
+                "name": "Charge current min"
+            },
+            "charge_current_user_set": {
+                "name": "Charge current user set"
+            },
+            "charge_current_value": {
+                "name": "Charge current value"
             },
             "charged_energy": {
                 "name": "Charged energy"
             },
+            "charging_current_phase_a": {
+                "name": "Charging current Phase A"
+            },
+            "charging_current_phase_b": {
+                "name": "Charging current Phase B"
+            },
+            "charging_current_phase_c": {
+                "name": "Charging current Phase C"
+            },
+            "charging_power": {
+                "name": "Charging power"
+            },
+            "charging_power_phase_a": {
+                "name": "Charging power Phase A"
+            },
+            "charging_power_phase_b": {
+                "name": "Charging power Phase B"
+            },
+            "charging_power_phase_c": {
+                "name": "Charging power Phase C"
+            },
+            "charging_rate": {
+                "name": "Charging rate"
+            },
             "charging_state": {
                 "name": "Charging state"
+            },
+            "charging_voltage": {
+                "name": "Charging voltage"
             },
             "control_pilot_status": {
                 "name": "Control Pilot status"
             },
-            "current_charging_current": {
-                "name": "Current charging current"
+            "energy_limit_limited": {
+                "name": "Energy limit setting"
             },
-            "current_charging_power": {
-                "name": "Current charging power"
+            "energy_limit_max": {
+                "name": "Energy limit max"
             },
-            "current_charging_power_phase_a": {
-                "name": "Current charging power Phase A"
+            "energy_limit_min": {
+                "name": "Energy limit min"
             },
-            "current_charging_power_phase_b": {
-                "name": "Current charging power Phase B"
+            "energy_limit_value": {
+                "name": "Energy limit value"
             },
-            "current_charging_power_phase_c": {
-                "name": "Current charging power Phase C"
-            },
-            "current_grid_frequency": {
-                "name": "Current grid frequency"
+            "grid_frequency": {
+                "name": "Grid frequency"
             },
             "peak_charging_power": {
                 "name": "Peak charging power"
@@ -65,6 +101,15 @@
             },
             "total_charging_cycles": {
                 "name": "Total charging cycles"
+            },
+            "voltage_phase_a": {
+                "name": "Voltage Phase A"
+            },
+            "voltage_phase_b": {
+                "name": "Voltage Phase B"
+            },
+            "voltage_phase_c": {
+                "name": "Voltage Phase C"
             },
             "wifi_network": {
                 "name": "WiFi Network"
