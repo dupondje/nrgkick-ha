@@ -70,6 +70,7 @@ class NRGKickWebsocket:
                     self._responses[data.metadata.requestId] = data
                     event.set()
             except websockets.ConnectionClosed:
+                self._connected = False
                 _LOGGER.warning("Connection to NRGKick closed")
 
     async def __send(self, event: asyncio.Event, data: nrgcp.Nrgcp):
