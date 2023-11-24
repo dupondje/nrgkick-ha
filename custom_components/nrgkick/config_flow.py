@@ -57,6 +57,9 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     # Return info that you want to store in the config entry.
     if details is None:
         raise CannotConnect
+
+    await nrgkicksocket.close()
+
     return {
         "serial": details.serialNumber,
         "name": details.deviceName.value,

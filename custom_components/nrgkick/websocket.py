@@ -37,14 +37,17 @@ class NRGKickWebsocket:
         return self._uuid
 
     @property
-    def connected(self):
+    def connected(self) -> bool:
         """Returns if the websocket is connected."""
+        return self._connected
 
     async def close(self) -> None:
         """Stop the connection."""
         self._connected = False
         if self._receive_task:
             self._receive_task.cancel()
+            await self._receive_task
+            self._receive_task = None
         if self._websocket:
             await self._websocket.close()
 
@@ -52,6 +55,10 @@ class NRGKickWebsocket:
         """Connect to the NRGKick device."""
         self._websocket = await websockets.connect(f"ws://{self._ip}:8765")
         self._connected = True
+        if self._receive_task:
+            self._receive_task.cancel()
+            await self._receive_task
+            self._receive_task = None
         self._receive_task = asyncio.create_task(self.__receive_loop())
 
     async def __receive_loop(self):
