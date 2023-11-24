@@ -46,7 +46,6 @@ class NRGKickWebsocket:
         self._connected = False
         if self._receive_task:
             self._receive_task.cancel()
-            await self._receive_task
             self._receive_task = None
         if self._websocket:
             await self._websocket.close()
@@ -57,7 +56,6 @@ class NRGKickWebsocket:
         self._connected = True
         if self._receive_task:
             self._receive_task.cancel()
-            await self._receive_task
             self._receive_task = None
         self._receive_task = asyncio.create_task(self.__receive_loop())
 
