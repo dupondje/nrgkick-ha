@@ -37,7 +37,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     details = None
 
     try:
-        nrgkicksocket.connect()
+        await nrgkicksocket.connect()
         # If no UUID was given, we need to create a new UUID for HA
         if not uuid:
             pin = data.get("pin")
@@ -48,10 +48,10 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
                 raise CannotCreateUUID()
         details = await nrgkicksocket.get_device_control_info()
     except (MissingUUIDorPin, CannotCreateUUID):
-        nrgkicksocket.stop()
+        await nrgkicksocket.close()
         raise
     except Exception:  # pylint: disable=broad-except
-        nrgkicksocket.stop()
+        await nrgkicksocket.close()
         raise CannotConnect
 
     # Return info that you want to store in the config entry.

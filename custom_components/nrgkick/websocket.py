@@ -22,8 +22,7 @@ class NRGKickWebsocket:
         self._uuid = _uuid
         self._websocket: Optional[websockets.client.WebSocketClientProtocol] = None
         self._receive_task: Optional[asyncio.Task] = None
-        self._running = False
-        self._connected = asyncio.Event()
+        self._connected = False
         self._requests: dict[str, asyncio.Event] = {}
         self._responses: dict[str, nrgcp.Nrgcp] = {}
 
@@ -37,31 +36,27 @@ class NRGKickWebsocket:
         """Returns the UUID."""
         return self._uuid
 
-    def stop(self) -> None:
+    @property
+    def connected(self):
+        """Returns if the websocket is connected."""
+
+    async def close(self) -> None:
         """Stop the connection."""
-        self._running = False
+        self._connected = False
         if self._receive_task:
             self._receive_task.cancel()
+        if self._websocket:
+            await self._websocket.close()
 
-    def connect(self) -> None:
+    async def connect(self) -> None:
         """Connect to the NRGKick device."""
-        self._receive_task = asyncio.create_task(self.__connect_loop())
-
-    async def __connect_loop(self):
-        self._running = True
-        while self._running:
-            async for self._websocket in websockets.connect(f"ws://{self._ip}:8765"):
-                try:
-                    self._connected.set()
-                    await self.__receive_loop()
-                except websockets.ConnectionClosed:
-                    continue
-        await self._websocket.close()
+        self._websocket = await websockets.connect(f"ws://{self._ip}:8765")
+        self._connected = True
+        self._receive_task = asyncio.create_task(self.__receive_loop())
 
     async def __receive_loop(self):
-        while self._running:
+        while self._connected:
             try:
-                await self._connected.wait()
                 response = await self._websocket.recv()
                 data = nrgcp.Nrgcp()
                 data.ParseFromString(response)
@@ -70,13 +65,11 @@ class NRGKickWebsocket:
                     self._responses[data.metadata.requestId] = data
                     event.set()
             except websockets.ConnectionClosed:
-                self._connected.clear()
-                raise
+                _LOGGER.warning("Connection to NRGKick closed")
 
     async def __send(self, event: asyncio.Event, data: nrgcp.Nrgcp):
         self._requests[str(data.metadata.requestId)] = event
         try:
-            await self._connected.wait()
             if self._websocket:
                 await self._websocket.send(data.SerializeToString())
         except Exception:  # pylint: disable=broad-except
