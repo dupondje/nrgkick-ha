@@ -1,5 +1,6 @@
 """Switch platform for NRGKick."""
 
+import asyncio
 from collections.abc import Callable, Coroutine
 from dataclasses import dataclass
 import logging
@@ -78,4 +79,6 @@ class NRGKickSwitch(NRGKickEntity, SwitchEntity):
         await self.entity_description.switch_fn(self.coordinator.websocket, False)
         # There is some delay between the response on the SET
         # and the CHARGECONTROL_SETTINGS_GET value to get updated
+        # Sleep 2 seconds to make sure the device status is updated
+        await asyncio.sleep(2)
         await self.coordinator.async_request_refresh()

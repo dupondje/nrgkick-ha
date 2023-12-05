@@ -1,5 +1,6 @@
 """Number platform for NRGKick."""
 
+import asyncio
 from collections.abc import Callable, Coroutine
 from dataclasses import dataclass
 import logging
@@ -80,4 +81,6 @@ class NRGKickNumber(NRGKickEntity, NumberEntity):
             value,
         )
         await self.entity_description.api_fn(self.coordinator.websocket, value)
+        # Sleep 2 seconds to make sure the device status is updated
+        await asyncio.sleep(2)
         await self.coordinator.async_refresh()
