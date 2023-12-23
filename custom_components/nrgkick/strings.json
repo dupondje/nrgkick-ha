@@ -24,6 +24,9 @@
     "number": {
       "charge_current_limit": {
         "name": "Charge current limit"
+      },
+      "energy_limit_value": {
+        "name": "[%key:component::nrgkick::entity::sensor::energy_limit_value::name%]"
       }
     },
     "sensor": {
@@ -99,8 +102,8 @@
       "control_pilot_status": {
         "name": "Control Pilot status"
       },
-      "energy_limit_limited": {
-        "name": "Energy limit setting"
+      "energy_limit_state": {
+        "name": "Energy limit state"
       },
       "energy_limit_max": {
         "name": "Energy limit max"
@@ -118,6 +121,9 @@
     "switch": {
       "charging_state": {
         "name": "Charging state"
+      },
+      "energy_limit_enabled": {
+        "name": "Energy limit enabled"
       }
     }
   }

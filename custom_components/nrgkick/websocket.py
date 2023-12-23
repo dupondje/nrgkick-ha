@@ -9,7 +9,6 @@ import websockets
 import websockets.client
 
 from .proto import nrgcp_pb2 as nrgcp
-from .proto.nrgcp_pb2 import NrgcpTypes
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -188,8 +187,8 @@ class NRGKickWebsocket:
             return False
         return True
 
-    async def set_energy_current_limit(self, limit: float) -> bool:
-        """Set the energy current limit."""
+    async def set_energy_limit(self, limit: float) -> bool:
+        """Set the energy limit."""
         event = asyncio.Event()
 
         request = self.__get_base_request()
@@ -197,7 +196,9 @@ class NRGKickWebsocket:
         request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
         request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
 
-        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = (
+            nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+        )
         request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.value = limit
 
         async with asyncio.timeout(5):
@@ -209,8 +210,8 @@ class NRGKickWebsocket:
             return False
         return True
 
-    async def set_energy_current_limit_to_unlimited(self, state: bool) -> bool:
-        """Set the energy current limit to unlimited"""
+    async def enable_energy_limit(self, enable: bool) -> bool:
+        """Enable the energy limit mode."""
         event = asyncio.Event()
 
         request = self.__get_base_request()
@@ -218,11 +219,14 @@ class NRGKickWebsocket:
         request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
         request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
 
-        mode = NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
-        if state:
-            mode = NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_UNLIMITED
-
-        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = mode
+        if enable:
+            request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = (
+                nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+            )
+        else:
+            request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = (
+                nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_UNLIMITED
+            )
 
         async with asyncio.timeout(5):
             await self.__send(event, request)

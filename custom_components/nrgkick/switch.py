@@ -5,7 +5,6 @@ from collections.abc import Callable, Coroutine
 from dataclasses import dataclass
 import logging
 from typing import Any
-from .proto.nrgcp_pb2 import NrgcpTypes
 
 from homeassistant.components.switch import (
     SwitchDeviceClass,
@@ -19,11 +18,12 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import DOMAIN
 from .coordinator import NRGKickCoordinator
 from .entity import NRGKickEntity
+from .proto import nrgcp_pb2 as nrgcp
 
 _LOGGER = logging.getLogger(__name__)
 
 
-@dataclass
+@dataclass(frozen=True)
 class NRGKickRequiredKeysMixin:
     """Mixin for required keys."""
 
@@ -31,7 +31,7 @@ class NRGKickRequiredKeysMixin:
     switch_fn: Callable[[Any, float | int], Coroutine[Any, Any, Any]]
 
 
-@dataclass
+@dataclass(frozen=True)
 class NRGKickSwitchEntityDescription(SwitchEntityDescription, NRGKickRequiredKeysMixin):
     """Describes NRGKick switch entity."""
 
@@ -45,11 +45,12 @@ SWITCHES: list[NRGKickSwitchEntityDescription] = [
         switch_fn=lambda c, v: c.set_charging_state_bool(v),
     ),
     NRGKickSwitchEntityDescription(
-        key="energy_limit_state",
-        translation_key="energy_limit_state",
+        key="energy_limit_enabled",
+        translation_key="energy_limit_enabled",
         device_class=SwitchDeviceClass.SWITCH,
-        value_fn=lambda data: data["cc_s"].energyLimit.limited == NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED,
-        switch_fn=lambda c, v: c.set_energy_current_limit_to_unlimited(v),
+        value_fn=lambda data: data["cc_s"].energyLimit.limited
+        == nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED,
+        switch_fn=lambda c, v: c.enable_energy_limit(v),
     ),
 ]
 

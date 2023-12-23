@@ -7,16 +7,15 @@ import logging
 from typing import Any
 
 from homeassistant.components.number import (
+    DEFAULT_MAX_VALUE,
+    DEFAULT_MIN_VALUE,
     NumberDeviceClass,
     NumberEntity,
     NumberEntityDescription,
     NumberMode,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    UnitOfElectricCurrent,
-    UnitOfEnergy
-)
+from homeassistant.const import UnitOfElectricCurrent, UnitOfEnergy
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -27,7 +26,7 @@ from .entity import NRGKickEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-@dataclass
+@dataclass(frozen=True)
 class NRGKickRequiredKeysMixin:
     """Mixin for required keys."""
 
@@ -35,9 +34,12 @@ class NRGKickRequiredKeysMixin:
     api_fn: Callable[[Any, float | int], Coroutine[Any, Any, Any]]
 
 
-@dataclass
+@dataclass(frozen=True)
 class NRGKickNumberEntityDescription(NumberEntityDescription, NRGKickRequiredKeysMixin):
     """Describes NRGKick number entity."""
+
+    native_max_value_fn: Callable[[Any], float] | None = None
+    native_min_value_fn: Callable[[Any], float] | None = None
 
 
 NUMBERS: list[NRGKickNumberEntityDescription] = [
@@ -56,15 +58,15 @@ NUMBERS: list[NRGKickNumberEntityDescription] = [
     NRGKickNumberEntityDescription(
         key="energy_limit_value",
         translation_key="energy_limit_value",
-        device_class=NumberDeviceClass.CURRENT,
+        device_class=NumberDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-        native_max_value= lambda data: data["cc_s"].energyLimit.max,
-        native_min_value= lambda data: data["cc_s"].energyLimit.min,
-        native_step=1.0,
+        native_max_value_fn=lambda data: round(data["cc_s"].energyLimit.max, 3),
+        native_min_value_fn=lambda data: round(data["cc_s"].energyLimit.min, 3),
+        native_step=0.001,
         mode=NumberMode.SLIDER,
-        value_fn=lambda data: data["cc_s"].energyLimit.value,
-        api_fn=lambda c, v: c.set_energy_current_limit(v),
-    )
+        value_fn=lambda data: round(data["cc_s"].energyLimit.value, 3),
+        api_fn=lambda c, v: c.set_energy_limit(v),
+    ),
 ]
 
 
@@ -88,6 +90,24 @@ class NRGKickNumber(NRGKickEntity, NumberEntity):
     def native_value(self) -> float | None:
         """Return the entity value to represent the entity state."""
         return self.entity_description.value_fn(self.coordinator.data)
+
+    @property
+    def native_min_value(self) -> float:
+        """Return the minimum value."""
+        if self.entity_description.native_min_value_fn is not None:
+            return self.entity_description.native_min_value_fn(self.coordinator.data)
+        if self.entity_description.native_min_value is not None:
+            return self.entity_description.native_min_value
+        return DEFAULT_MIN_VALUE
+
+    @property
+    def native_max_value(self) -> float:
+        """Return the maximum value."""
+        if self.entity_description.native_max_value_fn is not None:
+            return self.entity_description.native_max_value_fn(self.coordinator.data)
+        if self.entity_description.native_max_value is not None:
+            return self.entity_description.native_max_value
+        return DEFAULT_MAX_VALUE
 
     async def async_set_native_value(self, value: float) -> None:
         """Update to the cable."""
