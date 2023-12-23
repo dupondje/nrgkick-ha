@@ -1,0 +1,124 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Das Gerät wurde bereits eingerichtet"
+        },
+        "error": {
+            "cannot_connect": "Verbindungsfehler",
+            "cannot_create_uuid": "Fehler beim Erstellen einer UUID",
+            "invalid_auth": "Authentifizierung ungültig",
+            "missing_uuid_or_pin": "UUID oder PIN fehlen",
+            "unknown": "Unerwarteter Fehler"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "ip": "IP Adresse",
+                    "pin": "PIN",
+                    "uuid": "UUID"
+                }
+            }
+        }
+    },
+    "entity": {
+        "number": {
+            "charge_current_limit": {
+                "name": "Aktuelles Ladelimit"
+            }
+        },
+        "sensor": {
+            "charge_current_max": {
+                "name": "Maximale Stromstärke"
+            },
+            "charge_current_max_adapter": {
+                "name": "Maximale Stromstärke der Wallbox"
+            },
+            "charge_current_min": {
+                "name": "Minimale Stromstärke"
+            },
+            "charge_current_user_set": {
+                "name": "Eingestellte Stromstärke durch Benutzer"
+            },
+            "charge_current_value": {
+                "name": "Aktuelle Stromstärke"
+            },
+            "charged_energy": {
+                "name": "Geladene Energie"
+            },
+            "charging_current_phase_a": {
+                "name": "Aktuelle Stromstärke Phase A"
+            },
+            "charging_current_phase_b": {
+                "name": "Aktuelle Stromstärke Phase B"
+            },
+            "charging_current_phase_c": {
+                "name": "Aktuelle Stromstärke Phase C"
+            },
+            "charging_power": {
+                "name": "Aktuelle Ladeleistung"
+            },
+            "charging_power_phase_a": {
+                "name": "Aktuelle Ladeleistung Phase A"
+            },
+            "charging_power_phase_b": {
+                "name": "Aktuelle Ladeleistung Phase B"
+            },
+            "charging_power_phase_c": {
+                "name": "Aktuelle Ladeleistung Phase C"
+            },
+            "charging_rate": {
+                "name": "Aktuelle Laderate"
+            },
+            "charging_state": {
+                "name": "Ladestatus"
+            },
+            "charging_voltage": {
+                "name": "Aktueller Spannung"
+            },
+            "control_pilot_status": {
+                "name": "Control Pilot Status"
+            },
+            "energy_limit_limited": {
+                "name": "Einstellung Energielimit"
+            },
+            "energy_limit_max": {
+                "name": "Maximale Ladung"
+            },
+            "energy_limit_min": {
+                "name": "Minimale Ladung"
+            },
+            "energy_limit_value": {
+                "name": "Gesetzes Ladelimit"
+            },
+            "grid_frequency": {
+                "name": "Netzfrequenz"
+            },
+            "peak_charging_power": {
+                "name": "Maximalleistung Peak"
+            },
+            "total_charged_energy": {
+                "name": "Geladene Energie gesamt"
+            },
+            "total_charging_cycles": {
+                "name": "Anzahl Ladezyklen"
+            },
+            "voltage_phase_a": {
+                "name": "Aktuelle Spannung Phase A"
+            },
+            "voltage_phase_b": {
+                "name": "Aktuelle Spannung Phase B"
+            },
+            "voltage_phase_c": {
+                "name": "Aktuelle Spannung Phase C"
+            },
+            "wifi_network": {
+                "name": "WiFi Netzwerk"
+            }
+        },
+        "switch": {
+            "charging_state": {
+                "name": "Ladestatus"
+            }
+        }
+    }
+}
