@@ -9,6 +9,7 @@ import websockets
 import websockets.client
 
 from .proto import nrgcp_pb2 as nrgcp
+from .proto.nrgcp_pb2 import NrgcpTypes
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -177,6 +178,27 @@ class NRGKickWebsocket:
         request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
 
         request.payload.CHARGECONTROL_SETTINGS_UPDATE.chargeCurrent.userSet = limit
+
+        async with asyncio.timeout(5):
+            await self.__send(event, request)
+            await event.wait()
+
+        data = self._responses.pop(str(request.metadata.requestId))
+        if data is None:
+            return False
+        return True
+
+    async def set_energy_current_limit(self, limit: float) -> bool:
+        """Set the energy current limit."""
+        event = asyncio.Event()
+
+        request = self.__get_base_request()
+        request.header.type = nrgcp.Nrgcp.Header.Type.UPDATE
+        request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
+        request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
+
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.value = limit
 
         async with asyncio.timeout(5):
             await self.__send(event, request)

@@ -13,7 +13,10 @@ from homeassistant.components.number import (
     NumberMode,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import UnitOfElectricCurrent
+from homeassistant.const import (
+    UnitOfElectricCurrent,
+    UnitOfEnergy
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -50,6 +53,18 @@ NUMBERS: list[NRGKickNumberEntityDescription] = [
         value_fn=lambda data: data["cc_s"].chargeCurrent.userSet,
         api_fn=lambda c, v: c.set_charge_current_limit(v),
     ),
+    NRGKickNumberEntityDescription(
+        key="energy_limit_value",
+        translation_key="energy_limit_value",
+        device_class=NumberDeviceClass.CURRENT,
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        native_max_value= lambda data: data["cc_s"].energyLimit.max,
+        native_min_value= lambda data: data["cc_s"].energyLimit.min,
+        native_step=0.5,
+        mode=NumberMode.SLIDER,
+        value_fn=lambda data: data["cc_s"].energyLimit.value,
+        api_fn=lambda c, v: c.set_energy_current_limit(v),
+    )
 ]
 
 
