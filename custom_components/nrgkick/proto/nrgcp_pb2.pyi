@@ -534,7 +534,7 @@ class NrgcpChargecontrolSettingsUpdatePayload(_message.Message):
     def __init__(self, chargeCurrent: _Optional[_Union[NrgcpChargecontrolSettingsUpdatePayload.ChargeCurrent, _Mapping]] = ..., chargingState: _Optional[_Union[NrgcpChargecontrolSettingsUpdatePayload.ChargingState, _Mapping]] = ..., energyLimit: _Optional[_Union[NrgcpChargecontrolSettingsUpdatePayload.EnergyLimit, _Mapping]] = ..., phaseSwitch: _Optional[_Union[NrgcpChargecontrolSettingsUpdatePayload.PhaseSwitch, _Mapping]] = ...) -> None: ...
 
 class NrgcpDevicecontrolInfoextendedGetPayload(_message.Message):
-    __slots__ = ("adapter", "mainController", "smCurRstReason", "smRstDeepsleeps", "smRstPanics", "smRstUnknown", "smRstWatchdogs", "smUptime", "star", "touch")
+    __slots__ = ("adapter", "ipAddress", "macAddress", "mainController", "smCurRstReason", "smRstDeepsleeps", "smRstPanics", "smRstUnknown", "smRstWatchdogs", "smUptime", "star", "touch")
     class Adapter(_message.Message):
         __slots__ = ("chargedEnergy", "connectionCycle", "countryCode", "maxCurrent", "phases", "serial", "tagPcbType", "type2")
         class Type2(_message.Message):
@@ -589,6 +589,8 @@ class NrgcpDevicecontrolInfoextendedGetPayload(_message.Message):
         softwareVersion: str
         def __init__(self, hardwareVersion: _Optional[str] = ..., softwareVersion: _Optional[str] = ...) -> None: ...
     ADAPTER_FIELD_NUMBER: _ClassVar[int]
+    IPADDRESS_FIELD_NUMBER: _ClassVar[int]
+    MACADDRESS_FIELD_NUMBER: _ClassVar[int]
     MAINCONTROLLER_FIELD_NUMBER: _ClassVar[int]
     SMCURRSTREASON_FIELD_NUMBER: _ClassVar[int]
     SMRSTDEEPSLEEPS_FIELD_NUMBER: _ClassVar[int]
@@ -599,6 +601,8 @@ class NrgcpDevicecontrolInfoextendedGetPayload(_message.Message):
     STAR_FIELD_NUMBER: _ClassVar[int]
     TOUCH_FIELD_NUMBER: _ClassVar[int]
     adapter: NrgcpDevicecontrolInfoextendedGetPayload.Adapter
+    ipAddress: str
+    macAddress: str
     mainController: NrgcpDevicecontrolInfoextendedGetPayload.MainController
     smCurRstReason: int
     smRstDeepsleeps: int
@@ -608,7 +612,7 @@ class NrgcpDevicecontrolInfoextendedGetPayload(_message.Message):
     smUptime: int
     star: NrgcpDevicecontrolInfoextendedGetPayload.Star
     touch: NrgcpDevicecontrolInfoextendedGetPayload.Touch
-    def __init__(self, adapter: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.Adapter, _Mapping]] = ..., mainController: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.MainController, _Mapping]] = ..., smCurRstReason: _Optional[int] = ..., smRstDeepsleeps: _Optional[int] = ..., smRstPanics: _Optional[int] = ..., smRstUnknown: _Optional[int] = ..., smRstWatchdogs: _Optional[int] = ..., smUptime: _Optional[int] = ..., star: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.Star, _Mapping]] = ..., touch: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.Touch, _Mapping]] = ...) -> None: ...
+    def __init__(self, adapter: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.Adapter, _Mapping]] = ..., ipAddress: _Optional[str] = ..., macAddress: _Optional[str] = ..., mainController: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.MainController, _Mapping]] = ..., smCurRstReason: _Optional[int] = ..., smRstDeepsleeps: _Optional[int] = ..., smRstPanics: _Optional[int] = ..., smRstUnknown: _Optional[int] = ..., smRstWatchdogs: _Optional[int] = ..., smUptime: _Optional[int] = ..., star: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.Star, _Mapping]] = ..., touch: _Optional[_Union[NrgcpDevicecontrolInfoextendedGetPayload.Touch, _Mapping]] = ...) -> None: ...
 
 class NrgcpDevicecontrolInfoGetPayload(_message.Message):
     __slots__ = ("cellular", "cellularMode", "chargeRecordsItemStorage", "chargeRecordsUnsynced", "configState", "connectionInterface", "deviceName", "devicePassword", "devicePin", "gps", "hardwareRevision", "initialSetup", "phaseSwitch", "productType", "serialNumber", "softwareVersion", "statisticVersion", "utcTimestamp", "verificationCode")
@@ -1413,10 +1417,18 @@ class NrgcpSolarchargingProfileUpdatePayload(_message.Message):
     def __init__(self, enabled: bool = ..., idx: _Optional[int] = ..., profile: _Optional[_Union[NrgcpSolarchargingTypes.SolarProfile, _Mapping]] = ...) -> None: ...
 
 class NrgcpSolarchargingProfileDeletePayload(_message.Message):
-    __slots__ = ("idx",)
+    __slots__ = ("idx", "deleteType")
+    class DeleteType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        DELTE_TYPE_SOFT: _ClassVar[NrgcpSolarchargingProfileDeletePayload.DeleteType]
+        DELTE_TYPE_HARD: _ClassVar[NrgcpSolarchargingProfileDeletePayload.DeleteType]
+    DELTE_TYPE_SOFT: NrgcpSolarchargingProfileDeletePayload.DeleteType
+    DELTE_TYPE_HARD: NrgcpSolarchargingProfileDeletePayload.DeleteType
     IDX_FIELD_NUMBER: _ClassVar[int]
+    DELETETYPE_FIELD_NUMBER: _ClassVar[int]
     idx: int
-    def __init__(self, idx: _Optional[int] = ...) -> None: ...
+    deleteType: NrgcpSolarchargingProfileDeletePayload.DeleteType
+    def __init__(self, idx: _Optional[int] = ..., deleteType: _Optional[_Union[NrgcpSolarchargingProfileDeletePayload.DeleteType, str]] = ...) -> None: ...
 
 class NrgcpSolarchargingStateGetPayload(_message.Message):
     __slots__ = ("activeProfile", "deviceInfo", "state")
@@ -1818,9 +1830,11 @@ class NrgcpTypes(_message.Message):
         UNKNOWN_TIME_BASED_CHARGING_STATUS: _ClassVar[NrgcpTypes.TimeBasedChargingState]
         CHARGE_TIME_BASED: _ClassVar[NrgcpTypes.TimeBasedChargingState]
         PAUSE_TIME_BASED_CHARGING: _ClassVar[NrgcpTypes.TimeBasedChargingState]
+        SOLAR_TIME_BASED_CHARGING: _ClassVar[NrgcpTypes.TimeBasedChargingState]
     UNKNOWN_TIME_BASED_CHARGING_STATUS: NrgcpTypes.TimeBasedChargingState
     CHARGE_TIME_BASED: NrgcpTypes.TimeBasedChargingState
     PAUSE_TIME_BASED_CHARGING: NrgcpTypes.TimeBasedChargingState
+    SOLAR_TIME_BASED_CHARGING: NrgcpTypes.TimeBasedChargingState
     class Timezone(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNKNOWN_TIMEZONE_TYPE: _ClassVar[NrgcpTypes.Timezone]
@@ -2009,18 +2023,38 @@ class NrgcpTypes(_message.Message):
         value: float
         def __init__(self, max: _Optional[float] = ..., min: _Optional[float] = ..., value: _Optional[float] = ...) -> None: ...
     class TimeBasedChargingEvent(_message.Message):
-        __slots__ = ("chargeCurrent", "chargingType", "energyLimit", "time", "unlimitedCharging")
+        __slots__ = ("chargeCurrent", "chargingType", "energyLimit", "time", "unlimitedCharging", "profileId")
+        class ChargingType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = ()
+            UNKNOWN_CHARGING_TYPE: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.ChargingType]
+            CHARGE: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.ChargingType]
+            PAUSE: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.ChargingType]
+            SOLAR: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.ChargingType]
+        UNKNOWN_CHARGING_TYPE: NrgcpTypes.TimeBasedChargingEvent.ChargingType
+        CHARGE: NrgcpTypes.TimeBasedChargingEvent.ChargingType
+        PAUSE: NrgcpTypes.TimeBasedChargingEvent.ChargingType
+        SOLAR: NrgcpTypes.TimeBasedChargingEvent.ChargingType
+        class TimeBasedChargingUnlimited(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = ()
+            UNKNOWN_TIME_BASED_CHARGING_VALUE: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited]
+            LIMITED: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited]
+            UNLIMITED: _ClassVar[NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited]
+        UNKNOWN_TIME_BASED_CHARGING_VALUE: NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited
+        LIMITED: NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited
+        UNLIMITED: NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited
         CHARGECURRENT_FIELD_NUMBER: _ClassVar[int]
         CHARGINGTYPE_FIELD_NUMBER: _ClassVar[int]
         ENERGYLIMIT_FIELD_NUMBER: _ClassVar[int]
         TIME_FIELD_NUMBER: _ClassVar[int]
         UNLIMITEDCHARGING_FIELD_NUMBER: _ClassVar[int]
+        PROFILEID_FIELD_NUMBER: _ClassVar[int]
         chargeCurrent: float
-        chargingType: int
+        chargingType: NrgcpTypes.TimeBasedChargingEvent.ChargingType
         energyLimit: float
         time: int
-        unlimitedCharging: int
-        def __init__(self, chargeCurrent: _Optional[float] = ..., chargingType: _Optional[int] = ..., energyLimit: _Optional[float] = ..., time: _Optional[int] = ..., unlimitedCharging: _Optional[int] = ...) -> None: ...
+        unlimitedCharging: NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited
+        profileId: int
+        def __init__(self, chargeCurrent: _Optional[float] = ..., chargingType: _Optional[_Union[NrgcpTypes.TimeBasedChargingEvent.ChargingType, str]] = ..., energyLimit: _Optional[float] = ..., time: _Optional[int] = ..., unlimitedCharging: _Optional[_Union[NrgcpTypes.TimeBasedChargingEvent.TimeBasedChargingUnlimited, str]] = ..., profileId: _Optional[int] = ...) -> None: ...
     class WifiLocation(_message.Message):
         __slots__ = ("id", "name")
         ID_FIELD_NUMBER: _ClassVar[int]
@@ -2270,14 +2304,18 @@ class NrgcpSolarchargingTypes(_message.Message):
         maxCapacityWh: int
         def __init__(self, deviceInfo: _Optional[_Union[NrgcpSolarchargingTypes.DeviceInfo, _Mapping]] = ..., maxCapacityWh: _Optional[int] = ...) -> None: ...
     class BatterySocSettings(_message.Message):
-        __slots__ = ("enabled", "maxSoc", "minSoc")
+        __slots__ = ("considerMaxBatPower", "enabled", "maxBatChargePower", "maxSoc", "minSoc")
+        CONSIDERMAXBATPOWER_FIELD_NUMBER: _ClassVar[int]
         ENABLED_FIELD_NUMBER: _ClassVar[int]
+        MAXBATCHARGEPOWER_FIELD_NUMBER: _ClassVar[int]
         MAXSOC_FIELD_NUMBER: _ClassVar[int]
         MINSOC_FIELD_NUMBER: _ClassVar[int]
+        considerMaxBatPower: bool
         enabled: bool
+        maxBatChargePower: int
         maxSoc: int
         minSoc: int
-        def __init__(self, enabled: bool = ..., maxSoc: _Optional[int] = ..., minSoc: _Optional[int] = ...) -> None: ...
+        def __init__(self, considerMaxBatPower: bool = ..., enabled: bool = ..., maxBatChargePower: _Optional[int] = ..., maxSoc: _Optional[int] = ..., minSoc: _Optional[int] = ...) -> None: ...
     class ChargeMinSettings(_message.Message):
         __slots__ = ("chargeMinType", "maxBatDischargeW", "maxSupportW", "supportType")
         CHARGEMINTYPE_FIELD_NUMBER: _ClassVar[int]
@@ -2301,12 +2339,13 @@ class NrgcpSolarchargingTypes(_message.Message):
         slFail: NrgcpSolarchargingTypes.SmartLoadFailInfo
         def __init__(self, batFail: _Optional[_Union[NrgcpSolarchargingTypes.BatteryFailInfo, _Mapping]] = ..., emFail: _Optional[_Union[NrgcpSolarchargingTypes.EnergyMeterFailInfo, _Mapping]] = ..., invFail: _Optional[_Union[NrgcpSolarchargingTypes.InverterFailInfo, _Mapping]] = ..., slFail: _Optional[_Union[NrgcpSolarchargingTypes.SmartLoadFailInfo, _Mapping]] = ...) -> None: ...
     class DeviceInfo(_message.Message):
-        __slots__ = ("apiType", "authSettings", "deviceType", "host", "id", "model", "name", "port", "type", "uniqueId")
+        __slots__ = ("apiType", "authSettings", "deviceType", "host", "id", "mac", "model", "name", "port", "type", "uniqueId")
         APITYPE_FIELD_NUMBER: _ClassVar[int]
         AUTHSETTINGS_FIELD_NUMBER: _ClassVar[int]
         DEVICETYPE_FIELD_NUMBER: _ClassVar[int]
         HOST_FIELD_NUMBER: _ClassVar[int]
         ID_FIELD_NUMBER: _ClassVar[int]
+        MAC_FIELD_NUMBER: _ClassVar[int]
         MODEL_FIELD_NUMBER: _ClassVar[int]
         NAME_FIELD_NUMBER: _ClassVar[int]
         PORT_FIELD_NUMBER: _ClassVar[int]
@@ -2317,12 +2356,13 @@ class NrgcpSolarchargingTypes(_message.Message):
         deviceType: NrgcpSolarchargingTypes.DeviceType
         host: str
         id: int
+        mac: str
         model: str
         name: str
         port: int
         type: NrgcpSolarchargingTypes.BrandType
         uniqueId: str
-        def __init__(self, apiType: _Optional[_Union[NrgcpSolarchargingTypes.ApiType, str]] = ..., authSettings: _Optional[_Union[NrgcpSolarchargingTypes.AuthSettings, _Mapping]] = ..., deviceType: _Optional[_Union[NrgcpSolarchargingTypes.DeviceType, str]] = ..., host: _Optional[str] = ..., id: _Optional[int] = ..., model: _Optional[str] = ..., name: _Optional[str] = ..., port: _Optional[int] = ..., type: _Optional[_Union[NrgcpSolarchargingTypes.BrandType, str]] = ..., uniqueId: _Optional[str] = ...) -> None: ...
+        def __init__(self, apiType: _Optional[_Union[NrgcpSolarchargingTypes.ApiType, str]] = ..., authSettings: _Optional[_Union[NrgcpSolarchargingTypes.AuthSettings, _Mapping]] = ..., deviceType: _Optional[_Union[NrgcpSolarchargingTypes.DeviceType, str]] = ..., host: _Optional[str] = ..., id: _Optional[int] = ..., mac: _Optional[str] = ..., model: _Optional[str] = ..., name: _Optional[str] = ..., port: _Optional[int] = ..., type: _Optional[_Union[NrgcpSolarchargingTypes.BrandType, str]] = ..., uniqueId: _Optional[str] = ...) -> None: ...
     class DevicePing(_message.Message):
         __slots__ = ("batInfo", "emInfo", "invInfo", "requestInfo", "slInfo")
         BATINFO_FIELD_NUMBER: _ClassVar[int]
@@ -2356,16 +2396,18 @@ class NrgcpSolarchargingTypes(_message.Message):
         uniqueId: str
         def __init__(self, id: _Optional[int] = ..., uniqueId: _Optional[str] = ...) -> None: ...
     class EnergyMeterInfo(_message.Message):
-        __slots__ = ("deviceInfo", "isInverted", "meterLocation")
+        __slots__ = ("deviceInfo", "isInverted", "measureWithoutPnrgkick", "meterLocation")
         DEVICEINFO_FIELD_NUMBER: _ClassVar[int]
         ISINVERTED_FIELD_NUMBER: _ClassVar[int]
+        MEASUREWITHOUTPNRGKICK_FIELD_NUMBER: _ClassVar[int]
         METERLOCATION_FIELD_NUMBER: _ClassVar[int]
         deviceInfo: NrgcpSolarchargingTypes.DeviceInfo
         isInverted: bool
+        measureWithoutPnrgkick: bool
         meterLocation: NrgcpSolarchargingTypes.MeterLocation
-        def __init__(self, deviceInfo: _Optional[_Union[NrgcpSolarchargingTypes.DeviceInfo, _Mapping]] = ..., isInverted: bool = ..., meterLocation: _Optional[_Union[NrgcpSolarchargingTypes.MeterLocation, str]] = ...) -> None: ...
+        def __init__(self, deviceInfo: _Optional[_Union[NrgcpSolarchargingTypes.DeviceInfo, _Mapping]] = ..., isInverted: bool = ..., measureWithoutPnrgkick: bool = ..., meterLocation: _Optional[_Union[NrgcpSolarchargingTypes.MeterLocation, str]] = ...) -> None: ...
     class FullScanInfo(_message.Message):
-        __slots__ = ("batInfos", "brandType", "deviceType", "emInfos", "host", "invInfos", "pingResult", "port", "slInfos")
+        __slots__ = ("batInfos", "brandType", "deviceType", "emInfos", "host", "invInfos", "mac", "pingResult", "port", "slInfos")
         class PingResult(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             PING_SUCCESS: _ClassVar[NrgcpSolarchargingTypes.FullScanInfo.PingResult]
@@ -2380,6 +2422,7 @@ class NrgcpSolarchargingTypes(_message.Message):
         EMINFOS_FIELD_NUMBER: _ClassVar[int]
         HOST_FIELD_NUMBER: _ClassVar[int]
         INVINFOS_FIELD_NUMBER: _ClassVar[int]
+        MAC_FIELD_NUMBER: _ClassVar[int]
         PINGRESULT_FIELD_NUMBER: _ClassVar[int]
         PORT_FIELD_NUMBER: _ClassVar[int]
         SLINFOS_FIELD_NUMBER: _ClassVar[int]
@@ -2389,10 +2432,11 @@ class NrgcpSolarchargingTypes(_message.Message):
         emInfos: _containers.RepeatedCompositeFieldContainer[NrgcpSolarchargingTypes.EnergyMeterInfo]
         host: str
         invInfos: _containers.RepeatedCompositeFieldContainer[NrgcpSolarchargingTypes.SolarInverterInfo]
+        mac: str
         pingResult: NrgcpSolarchargingTypes.FullScanInfo.PingResult
         port: int
         slInfos: _containers.RepeatedCompositeFieldContainer[NrgcpSolarchargingTypes.SmartLoadInfo]
-        def __init__(self, batInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.BatteryInfo, _Mapping]]] = ..., brandType: _Optional[_Union[NrgcpSolarchargingTypes.BrandType, str]] = ..., deviceType: _Optional[_Union[NrgcpSolarchargingTypes.DeviceType, str]] = ..., emInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.EnergyMeterInfo, _Mapping]]] = ..., host: _Optional[str] = ..., invInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.SolarInverterInfo, _Mapping]]] = ..., pingResult: _Optional[_Union[NrgcpSolarchargingTypes.FullScanInfo.PingResult, str]] = ..., port: _Optional[int] = ..., slInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.SmartLoadInfo, _Mapping]]] = ...) -> None: ...
+        def __init__(self, batInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.BatteryInfo, _Mapping]]] = ..., brandType: _Optional[_Union[NrgcpSolarchargingTypes.BrandType, str]] = ..., deviceType: _Optional[_Union[NrgcpSolarchargingTypes.DeviceType, str]] = ..., emInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.EnergyMeterInfo, _Mapping]]] = ..., host: _Optional[str] = ..., invInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.SolarInverterInfo, _Mapping]]] = ..., mac: _Optional[str] = ..., pingResult: _Optional[_Union[NrgcpSolarchargingTypes.FullScanInfo.PingResult, str]] = ..., port: _Optional[int] = ..., slInfos: _Optional[_Iterable[_Union[NrgcpSolarchargingTypes.SmartLoadInfo, _Mapping]]] = ...) -> None: ...
     class GridSettings(_message.Message):
         __slots__ = ("autoGridOffset", "gridOffsetW", "perPhaseOffset")
         AUTOGRIDOFFSET_FIELD_NUMBER: _ClassVar[int]
@@ -2478,14 +2522,18 @@ class NrgcpSolarchargingTypes(_message.Message):
         deviceInfo: NrgcpSolarchargingTypes.DeviceInfo
         def __init__(self, deviceInfo: _Optional[_Union[NrgcpSolarchargingTypes.DeviceInfo, _Mapping]] = ...) -> None: ...
     class SmartLoadTempSettings(_message.Message):
-        __slots__ = ("enabled", "maxTemp", "minTemp")
+        __slots__ = ("considerMaxSlPower", "enabled", "maxSlPower", "maxTemp", "minTemp")
+        CONSIDERMAXSLPOWER_FIELD_NUMBER: _ClassVar[int]
         ENABLED_FIELD_NUMBER: _ClassVar[int]
+        MAXSLPOWER_FIELD_NUMBER: _ClassVar[int]
         MAXTEMP_FIELD_NUMBER: _ClassVar[int]
         MINTEMP_FIELD_NUMBER: _ClassVar[int]
+        considerMaxSlPower: bool
         enabled: bool
+        maxSlPower: int
         maxTemp: int
         minTemp: int
-        def __init__(self, enabled: bool = ..., maxTemp: _Optional[int] = ..., minTemp: _Optional[int] = ...) -> None: ...
+        def __init__(self, considerMaxSlPower: bool = ..., enabled: bool = ..., maxSlPower: _Optional[int] = ..., maxTemp: _Optional[int] = ..., minTemp: _Optional[int] = ...) -> None: ...
     class SolarBatteryData(_message.Message):
         __slots__ = ("batPowerW", "batSoc")
         BATPOWERW_FIELD_NUMBER: _ClassVar[int]
