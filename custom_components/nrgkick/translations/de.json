@@ -78,7 +78,7 @@
             "control_pilot_status": {
                 "name": "Control Pilot Status"
             },
-            "energy_limit_limited": {
+            "energy_limit_state": {
                 "name": "Einstellung Energielimit"
             },
             "energy_limit_max": {
@@ -118,6 +118,9 @@
         "switch": {
             "charging_state": {
                 "name": "Ladestatus"
+            },
+            "energy_limit_enabled": {
+                "name": "Energielimit aktiviert"
             }
         }
     }

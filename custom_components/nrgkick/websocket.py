@@ -187,6 +187,56 @@ class NRGKickWebsocket:
             return False
         return True
 
+    async def set_energy_limit(self, limit: float) -> bool:
+        """Set the energy limit."""
+        event = asyncio.Event()
+
+        request = self.__get_base_request()
+        request.header.type = nrgcp.Nrgcp.Header.Type.UPDATE
+        request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
+        request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
+
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = (
+            nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+        )
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.value = limit
+
+        async with asyncio.timeout(5):
+            await self.__send(event, request)
+            await event.wait()
+
+        data = self._responses.pop(str(request.metadata.requestId))
+        if data is None:
+            return False
+        return True
+
+    async def enable_energy_limit(self, enable: bool) -> bool:
+        """Enable the energy limit mode."""
+        event = asyncio.Event()
+
+        request = self.__get_base_request()
+        request.header.type = nrgcp.Nrgcp.Header.Type.UPDATE
+        request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
+        request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
+
+        if enable:
+            request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = (
+                nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+            )
+        else:
+            request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = (
+                nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_UNLIMITED
+            )
+
+        async with asyncio.timeout(5):
+            await self.__send(event, request)
+            await event.wait()
+
+        data = self._responses.pop(str(request.metadata.requestId))
+        if data is None:
+            return False
+        return True
+
     async def set_charging_state(self, state: nrgcp.NrgcpTypes.ChargingState) -> bool:
         """Set the charging state."""
         event = asyncio.Event()

@@ -28,14 +28,14 @@ from .entity import NRGKickEntity
 from .proto import nrgcp_pb2 as nrgcp
 
 
-@dataclass
+@dataclass(frozen=True)
 class NRGKickMixin:
     """Mixin for required keys."""
 
     value_fn: Callable[[Any], StateType]
 
 
-@dataclass
+@dataclass(frozen=True)
 class NRGKickSensorEntityDescription(SensorEntityDescription, NRGKickMixin):
     """Describes the NRGKick Sensor Entity."""
 
@@ -253,8 +253,8 @@ SENSORS = [
         value_fn=lambda data: nrgcp.NrgcpTypes.CpStatus.Name(data["cc_s"].cpStatus),
     ),
     NRGKickSensorEntityDescription(
-        key="energy_limit_limited",
-        translation_key="energy_limit_limited",
+        key="energy_limit_state",
+        translation_key="energy_limit_state",
         value_fn=lambda data: nrgcp.NrgcpTypes.EnergyLimitMode.Name(
             data["cc_s"].energyLimit.limited
         ),
@@ -265,8 +265,8 @@ SENSORS = [
         state_class=SensorStateClass.TOTAL,
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-        suggested_display_precision=2,
-        value_fn=lambda data: data["cc_s"].energyLimit.max,
+        suggested_display_precision=3,
+        value_fn=lambda data: round(data["cc_s"].energyLimit.max, 3),
     ),
     NRGKickSensorEntityDescription(
         key="energy_limit_min",
@@ -274,8 +274,8 @@ SENSORS = [
         state_class=SensorStateClass.TOTAL,
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-        suggested_display_precision=2,
-        value_fn=lambda data: data["cc_s"].energyLimit.min,
+        suggested_display_precision=3,
+        value_fn=lambda data: round(data["cc_s"].energyLimit.min, 3),
     ),
     NRGKickSensorEntityDescription(
         key="energy_limit_value",
@@ -283,8 +283,8 @@ SENSORS = [
         state_class=SensorStateClass.TOTAL,
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-        suggested_display_precision=2,
-        value_fn=lambda data: data["cc_s"].energyLimit.value,
+        suggested_display_precision=3,
+        value_fn=lambda data: round(data["cc_s"].energyLimit.value, 3),
     ),
     # Wifi Status
     NRGKickSensorEntityDescription(
