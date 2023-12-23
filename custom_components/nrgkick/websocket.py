@@ -209,6 +209,30 @@ class NRGKickWebsocket:
             return False
         return True
 
+    async def set_energy_current_limit_to_unlimited(self, state: bool) -> bool:
+        """Set the energy current limit to unlimited"""
+        event = asyncio.Event()
+
+        request = self.__get_base_request()
+        request.header.type = nrgcp.Nrgcp.Header.Type.UPDATE
+        request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
+        request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
+
+        mode = NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED
+        if state:
+            mode = NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_UNLIMITED
+
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.energyLimit.limited = mode
+
+        async with asyncio.timeout(5):
+            await self.__send(event, request)
+            await event.wait()
+
+        data = self._responses.pop(str(request.metadata.requestId))
+        if data is None:
+            return False
+        return True
+
     async def set_charging_state(self, state: nrgcp.NrgcpTypes.ChargingState) -> bool:
         """Set the charging state."""
         event = asyncio.Event()

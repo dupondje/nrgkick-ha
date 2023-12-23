@@ -5,6 +5,7 @@ from collections.abc import Callable, Coroutine
 from dataclasses import dataclass
 import logging
 from typing import Any
+from .proto.nrgcp_pb2 import NrgcpTypes
 
 from homeassistant.components.switch import (
     SwitchDeviceClass,
@@ -42,6 +43,13 @@ SWITCHES: list[NRGKickSwitchEntityDescription] = [
         device_class=SwitchDeviceClass.SWITCH,
         value_fn=lambda data: data["cc_s"].chargingState.value == 1,
         switch_fn=lambda c, v: c.set_charging_state_bool(v),
+    ),
+    NRGKickSwitchEntityDescription(
+        key="energy_limit_state",
+        translation_key="energy_limit_state",
+        device_class=SwitchDeviceClass.SWITCH,
+        value_fn=lambda data: data["cc_s"].energyLimit.limited == NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED,
+        switch_fn=lambda c, v: c.set_energy_current_limit_to_unlimited(v),
     ),
 ]
 
