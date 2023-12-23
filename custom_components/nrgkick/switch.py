@@ -22,12 +22,17 @@ from .entity import NRGKickEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-@dataclass(frozen=True)
-class NRGKickSwitchEntityDescription(SwitchEntityDescription):
-    """Describes NRGKick switch entity."""
+@dataclass
+class NRGKickRequiredKeysMixin:
+    """Mixin for required keys."""
 
     value_fn: Callable[[Any], bool]
     switch_fn: Callable[[Any, float | int], Coroutine[Any, Any, Any]]
+
+
+@dataclass
+class NRGKickSwitchEntityDescription(SwitchEntityDescription, NRGKickRequiredKeysMixin):
+    """Describes NRGKick switch entity."""
 
 
 SWITCHES: list[NRGKickSwitchEntityDescription] = [
