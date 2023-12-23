@@ -24,17 +24,12 @@ from .entity import NRGKickEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-@dataclass
-class NRGKickRequiredKeysMixin:
-    """Mixin for required keys."""
+@dataclass(frozen=True)
+class NRGKickNumberEntityDescription(NumberEntityDescription):
+    """Describes NRGKick number entity."""
 
     value_fn: Callable[[Any], float | int | None]
     api_fn: Callable[[Any, float | int], Coroutine[Any, Any, Any]]
-
-
-@dataclass
-class NRGKickNumberEntityDescription(NumberEntityDescription, NRGKickRequiredKeysMixin):
-    """Describes NRGKick number entity."""
 
 
 NUMBERS: list[NRGKickNumberEntityDescription] = [

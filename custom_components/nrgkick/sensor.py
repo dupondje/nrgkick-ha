@@ -28,16 +28,11 @@ from .entity import NRGKickEntity
 from .proto import nrgcp_pb2 as nrgcp
 
 
-@dataclass
-class NRGKickMixin:
-    """Mixin for required keys."""
+@dataclass(frozen=True)
+class NRGKickSensorEntityDescription(SensorEntityDescription):
+    """Describes the NRGKick Sensor Entity."""
 
     value_fn: Callable[[Any], StateType]
-
-
-@dataclass
-class NRGKickSensorEntityDescription(SensorEntityDescription, NRGKickMixin):
-    """Describes the NRGKick Sensor Entity."""
 
 
 SENSORS = [
