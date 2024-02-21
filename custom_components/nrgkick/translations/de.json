@@ -24,6 +24,9 @@
         "number": {
             "charge_current_limit": {
                 "name": "Aktuelles Ladelimit"
+            },
+            "phase_switch_value": {
+                "name": "Ladung phases"
             }
         },
         "sensor": {

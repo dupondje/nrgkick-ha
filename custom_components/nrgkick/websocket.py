@@ -293,3 +293,27 @@ class NRGKickWebsocket:
         if data.header.status != nrgcp.Nrgcp.Header.Status.ACCEPTED:
             return None
         return devUUID
+
+    async def set_phase_switch(self, phases: float) -> bool:
+        """Set the phase switch value."""
+        event = asyncio.Event()
+
+        request = self.__get_base_request()
+        request.header.type = nrgcp.Nrgcp.Header.Type.UPDATE
+        request.header.service = nrgcp.Nrgcp.Header.Service.CHARGE_CONTROL
+        request.header.property = nrgcp.Nrgcp.Header.Property.SETTINGS
+
+        phase_type = nrgcp.NrgcpChargecontrolSettingsUpdatePayload.PhaseSwitch.PhaseSelection.Name(
+            int(phases)
+        )
+
+        request.payload.CHARGECONTROL_SETTINGS_UPDATE.phaseSwitch.selection = phase_type
+
+        async with asyncio.timeout(5):
+            await self.__send(event, request)
+            await event.wait()
+
+        data = self._responses.pop(str(request.metadata.requestId))
+        if data is None:
+            return False
+        return True

@@ -27,6 +27,9 @@
             },
             "energy_limit_value": {
                 "name": "Energy limit value"
+            },
+            "phase_switch_value": {
+                "name": "Charging phases"
             }
         },
         "sensor": {
@@ -81,14 +84,14 @@
             "control_pilot_status": {
                 "name": "Control Pilot status"
             },
-            "energy_limit_state": {
-                "name": "Energy limit state"
-            },
             "energy_limit_max": {
                 "name": "Energy limit max"
             },
             "energy_limit_min": {
                 "name": "Energy limit min"
+            },
+            "energy_limit_state": {
+                "name": "Energy limit state"
             },
             "energy_limit_value": {
                 "name": "Energy limit value"
