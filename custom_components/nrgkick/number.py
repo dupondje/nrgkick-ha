@@ -67,6 +67,16 @@ NUMBERS: list[NRGKickNumberEntityDescription] = [
         value_fn=lambda data: round(data["cc_s"].energyLimit.value, 3),
         api_fn=lambda c, v: c.set_energy_limit(v),
     ),
+    NRGKickNumberEntityDescription(
+        key="phase_switch_value",
+        translation_key="phase_switch_value",
+        native_max_value=3.0,
+        native_min_value=1.0,
+        native_step=1.0,
+        mode=NumberMode.SLIDER,
+        value_fn=lambda data: data["cc_s"].phaseSwitch.selection,
+        api_fn=lambda c, v: c.set_phase_switch(v),
+    ),
 ]
 
 

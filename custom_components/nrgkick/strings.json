@@ -27,6 +27,9 @@
       },
       "energy_limit_value": {
         "name": "[%key:component::nrgkick::entity::sensor::energy_limit_value::name%]"
+      },
+      "phase_switch_value": {
+        "name": "Charging phases"
       }
     },
     "sensor": {
