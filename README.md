@@ -10,6 +10,8 @@ To be able to setup this integration, you need to have the IP address of the NRG
 Note down the last 7 numbers of the NRGKick's serial number before the 'SxDx'.
 With this number, you can configure the HA Integration.
 
+NOTE: If you configured a PIN code when you first configured the NRGKick app on your phone, you will need to use that PIN code instead of the 7 digits serial number.
+
 The setup phase will create a new unique UUID to be used for the NRGKick Integration in HA.
 
 ### UUID
