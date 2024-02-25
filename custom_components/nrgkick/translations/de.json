@@ -26,7 +26,7 @@
                 "name": "Aktuelles Ladelimit"
             },
             "phase_switch_value": {
-                "name": "Ladung phases"
+                "name": "Phasenumschaltung"
             }
         },
         "sensor": {
