@@ -5,17 +5,15 @@
         },
         "error": {
             "cannot_connect": "Verbindungsfehler",
-            "cannot_create_uuid": "Fehler beim Erstellen einer UUID",
             "invalid_auth": "Authentifizierung ungültig",
-            "missing_uuid_or_pin": "UUID oder PIN fehlen",
             "unknown": "Unerwarteter Fehler"
         },
         "step": {
             "user": {
                 "data": {
                     "ip": "IP Adresse",
-                    "pin": "PIN",
-                    "uuid": "UUID"
+                    "login": "Login",
+                    "password": "Password"
                 }
             }
         }

@@ -44,38 +44,34 @@ class NRGKickNumberEntityDescription(NumberEntityDescription, NRGKickRequiredKey
 
 NUMBERS: list[NRGKickNumberEntityDescription] = [
     NRGKickNumberEntityDescription(
-        key="charge_current_limit",
-        translation_key="charge_current_limit",
+        key="current_set",
         device_class=NumberDeviceClass.CURRENT,
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
-        native_max_value_fn=lambda data: data["cc_s"].chargeCurrent.maxAdapter,
+        native_max_value_fn=lambda data: data["info"]["general"]["rated_current"],
         native_min_value=6.0,
         native_step=0.1,
         mode=NumberMode.SLIDER,
-        value_fn=lambda data: data["cc_s"].chargeCurrent.userSet,
-        api_fn=lambda c, v: c.set_charge_current_limit(v),
+        value_fn=lambda data: data["control"]["current_set"],
+        api_fn=lambda c, v: c.set("control", "current_set", v),
     ),
     NRGKickNumberEntityDescription(
-        key="energy_limit_value",
-        translation_key="energy_limit_value",
+        key="energy_limit",
         device_class=NumberDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
-        native_max_value_fn=lambda data: round(data["cc_s"].energyLimit.max, 3),
-        native_min_value_fn=lambda data: round(data["cc_s"].energyLimit.min, 3),
+        native_min_value=0,
         native_step=0.001,
         mode=NumberMode.SLIDER,
-        value_fn=lambda data: round(data["cc_s"].energyLimit.value, 3),
-        api_fn=lambda c, v: c.set_energy_limit(v),
+        value_fn=lambda data: round(data["control"]["energy_limit"], 3),
+        api_fn=lambda c, v: c.set("control", "energy_limit", v),
     ),
     NRGKickNumberEntityDescription(
-        key="phase_switch_value",
-        translation_key="phase_switch_value",
+        key="phase_count",
         native_max_value=3.0,
         native_min_value=1.0,
         native_step=1.0,
         mode=NumberMode.SLIDER,
-        value_fn=lambda data: data["cc_s"].phaseSwitch.selection,
-        api_fn=lambda c, v: c.set_phase_switch(v),
+        value_fn=lambda data: data["control"]["phase_count"],
+        api_fn=lambda c, v: c.set("control", "phase_count", v),
     ),
 ]
 
@@ -125,7 +121,7 @@ class NRGKickNumber(NRGKickEntity, NumberEntity):
             "Settings charge level to '%s'",
             value,
         )
-        await self.entity_description.api_fn(self.coordinator.websocket, value)
+        await self.entity_description.api_fn(self.coordinator, value)
         # Sleep 2 seconds to make sure the device status is updated
         await asyncio.sleep(2)
         await self.coordinator.async_refresh()

@@ -7,6 +7,5 @@
   "dependencies": [],
   "documentation": "https://www.home-assistant.io/integrations/nrgkick",
   "homekit": {},
-  "iot_class": "local_polling",
-  "requirements": ["websockets>=12.0", "protobuf>=4.24.3"]
+  "iot_class": "local_polling"
 }

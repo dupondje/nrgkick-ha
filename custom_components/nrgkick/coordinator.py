@@ -1,19 +1,16 @@
 """NRGKick coordinator class."""
 
-import asyncio
 from collections.abc import Callable
 from datetime import timedelta
 import logging
 from typing import Any
 
-from websockets import InvalidHandshake, InvalidURI
+import aiohttp
 
-from homeassistant.const import EVENT_HOMEASSISTANT_STOP
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN
-from .websocket import NRGKickWebsocket
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,7 +18,9 @@ _LOGGER = logging.getLogger(__name__)
 class NRGKickCoordinator(DataUpdateCoordinator):
     """NRGKick coordinator."""
 
-    def __init__(self, hass: HomeAssistant, websocket: NRGKickWebsocket) -> None:
+    def __init__(
+        self, hass: HomeAssistant, url: str, login: str, password: str
+    ) -> None:
         """Initialize NRGKick."""
         super().__init__(
             hass,
@@ -30,47 +29,10 @@ class NRGKickCoordinator(DataUpdateCoordinator):
             update_interval=timedelta(seconds=30),
         )
         self.unsub: Callable | None = None
-        self.websocket = websocket
-
-    async def _setup_websocket(self) -> None:
-        """Start WebSocket Connection."""
-        try:
-            async with asyncio.timeout(15):
-                await self.websocket.connect()
-        except InvalidURI as exception:
-            self.logger.error("Invalid URL for %s: %s", self.name, exception)
-            if self.unsub:
-                self.unsub()
-                self.unsub = None
-            self.last_update_success = False
-            self.async_update_listeners()
-        except (TimeoutError, asyncio.TimeoutError) as exception:
-            self.logger.warning(
-                "Timed out waiting for %s. Will retry: %s",
-                self.name,
-                exception,
-            )
-            self.last_update_success = False
-            self.async_update_listeners()
-        except (OSError, InvalidHandshake) as exception:
-            self.logger.error("Connection failed for %s: %s", self.name, exception)
-            if self.unsub:
-                self.unsub()
-                self.unsub = None
-            self.last_update_success = False
-            self.async_update_listeners()
-
-        self.last_update_success = True
-        self.async_update_listeners()
-
-        async def close_websocket(_) -> None:
-            """Close WebSocket connection."""
-            await self.websocket.close()
-
-        # Clean disconnect WebSocket on Home Assistant shutdown
-        self.unsub = self.hass.bus.async_listen_once(
-            EVENT_HOMEASSISTANT_STOP, close_websocket
-        )
+        self._url = url
+        self._auth = None
+        if login is not None:
+            self._auth = aiohttp.BasicAuth(login, password)
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch data from API endpoint.
@@ -78,15 +40,32 @@ class NRGKickCoordinator(DataUpdateCoordinator):
         This is the place to pre-process the data to lookup tables
         so entities can quickly look up their data.
         """
+        data: Any = {}
         try:
-            if not self.websocket.connected:
-                await self._setup_websocket()
+            async with aiohttp.ClientSession(
+                base_url=self._url, auth=self._auth, timeout=aiohttp.ClientTimeout(5)
+            ) as session:
+                async with session.get("/info") as resp:
+                    info = await resp.json()
+                async with session.get("/control") as resp:
+                    control = await resp.json()
+                async with session.get("/values") as resp:
+                    values = await resp.json()
 
-            data: Any = {}
-            data["cc_dv"] = await self.websocket.get_charge_control_dynamic_values()
-            data["cc_s"] = await self.websocket.get_charge_control_settings()
-            data["w_s"] = await self.websocket.get_wifi_status()
-            return data
-        except Exception:
+            data["info"] = info
+            data["control"] = control
+            data["values"] = values
+        except Exception as ex:
             # Most likely a connection issue. Retry later
-            raise UpdateFailed
+            raise UpdateFailed from ex
+
+        return data
+
+    async def set(self, endpoint: str, parameter: str, value: str):
+        """Set a value via the API."""
+        params = {parameter: value}
+        async with (
+            aiohttp.ClientSession() as session,
+            session.get(self._url + "/" + endpoint, params=params) as resp,
+        ):
+            await resp.json()

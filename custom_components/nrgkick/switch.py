@@ -18,7 +18,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import DOMAIN
 from .coordinator import NRGKickCoordinator
 from .entity import NRGKickEntity
-from .proto import nrgcp_pb2 as nrgcp
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -38,19 +37,10 @@ class NRGKickSwitchEntityDescription(SwitchEntityDescription, NRGKickRequiredKey
 
 SWITCHES: list[NRGKickSwitchEntityDescription] = [
     NRGKickSwitchEntityDescription(
-        key="charging_state",
-        translation_key="charging_state",
+        key="charge_pause",
         device_class=SwitchDeviceClass.SWITCH,
-        value_fn=lambda data: data["cc_s"].chargingState.value == 1,
-        switch_fn=lambda c, v: c.set_charging_state_bool(v),
-    ),
-    NRGKickSwitchEntityDescription(
-        key="energy_limit_enabled",
-        translation_key="energy_limit_enabled",
-        device_class=SwitchDeviceClass.SWITCH,
-        value_fn=lambda data: data["cc_s"].energyLimit.limited
-        == nrgcp.NrgcpTypes.EnergyLimitMode.ENERGY_LIMIT_MODE_LIMITED,
-        switch_fn=lambda c, v: c.enable_energy_limit(v),
+        value_fn=lambda data: data["control"]["charge_pause"] == 0,
+        switch_fn=lambda c, v: c.set("control", "charge_pause", v),
     ),
 ]
 
@@ -78,14 +68,14 @@ class NRGKickSwitch(NRGKickEntity, SwitchEntity):
 
     async def async_turn_on(self):
         """Turn on charging."""
-        await self.entity_description.switch_fn(self.coordinator.websocket, True)
+        await self.entity_description.switch_fn(self.coordinator, 1)
         # There is some delay between the response on the SET
         # and the CHARGECONTROL_SETTINGS_GET value to get updated
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self):
         """Turn off charging."""
-        await self.entity_description.switch_fn(self.coordinator.websocket, False)
+        await self.entity_description.switch_fn(self.coordinator, 0)
         # There is some delay between the response on the SET
         # and the CHARGECONTROL_SETTINGS_GET value to get updated
         # Sleep 2 seconds to make sure the device status is updated
