@@ -37,7 +37,12 @@ class NRGKickEntity(CoordinatorEntity[NRGKickCoordinator]):
             self._attr_device_info = DeviceInfo(
                 identifiers={(DOMAIN, serial)},
                 manufacturer="DiniTech",
-                model="NRGKick",
+                model=coordinator.config_entry.data["model"],
                 name=dev_name,
                 serial_number=serial,
             )
+
+    @property
+    def translation_key(self):
+        """Return the translation key to translate the entity's name and states."""
+        return self.entity_description.key

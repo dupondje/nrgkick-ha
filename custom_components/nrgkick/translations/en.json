@@ -1,133 +1,248 @@
 {
-    "config": {
-        "abort": {
-            "already_configured": "Device is already configured"
-        },
-        "error": {
-            "cannot_connect": "Failed to connect",
-            "cannot_create_uuid": "Cannot create a new UUID",
-            "invalid_auth": "Invalid authentication",
-            "missing_uuid_or_pin": "Missing UUID or PIN",
-            "unknown": "Unexpected error"
-        },
-        "step": {
-            "user": {
-                "data": {
-                    "ip": "IP address",
-                    "pin": "PIN",
-                    "uuid": "UUID"
-                }
-            }
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "url": "URL",
+          "login": "Login",
+          "password": "Password"
         }
+      }
     },
-    "entity": {
-        "number": {
-            "charge_current_limit": {
-                "name": "Charge current limit"
-            },
-            "energy_limit_value": {
-                "name": "Energy limit value"
-            },
-            "phase_switch_value": {
-                "name": "Charging phases"
-            }
-        },
-        "sensor": {
-            "charge_current_max": {
-                "name": "Charge current max"
-            },
-            "charge_current_max_adapter": {
-                "name": "Charge current adapter max"
-            },
-            "charge_current_min": {
-                "name": "Charge current min"
-            },
-            "charge_current_user_set": {
-                "name": "Charge current user set"
-            },
-            "charge_current_value": {
-                "name": "Charge current value"
-            },
-            "charged_energy": {
-                "name": "Charged energy"
-            },
-            "charging_current_phase_a": {
-                "name": "Charging current Phase A"
-            },
-            "charging_current_phase_b": {
-                "name": "Charging current Phase B"
-            },
-            "charging_current_phase_c": {
-                "name": "Charging current Phase C"
-            },
-            "charging_power": {
-                "name": "Charging power"
-            },
-            "charging_power_phase_a": {
-                "name": "Charging power Phase A"
-            },
-            "charging_power_phase_b": {
-                "name": "Charging power Phase B"
-            },
-            "charging_power_phase_c": {
-                "name": "Charging power Phase C"
-            },
-            "charging_rate": {
-                "name": "Charging rate"
-            },
-            "charging_state": {
-                "name": "Charging state"
-            },
-            "charging_voltage": {
-                "name": "Charging voltage"
-            },
-            "control_pilot_status": {
-                "name": "Control Pilot status"
-            },
-            "energy_limit_max": {
-                "name": "Energy limit max"
-            },
-            "energy_limit_min": {
-                "name": "Energy limit min"
-            },
-            "energy_limit_state": {
-                "name": "Energy limit state"
-            },
-            "energy_limit_value": {
-                "name": "Energy limit value"
-            },
-            "grid_frequency": {
-                "name": "Grid frequency"
-            },
-            "peak_charging_power": {
-                "name": "Peak charging power"
-            },
-            "total_charged_energy": {
-                "name": "Total charged energy"
-            },
-            "total_charging_cycles": {
-                "name": "Total charging cycles"
-            },
-            "voltage_phase_a": {
-                "name": "Voltage Phase A"
-            },
-            "voltage_phase_b": {
-                "name": "Voltage Phase B"
-            },
-            "voltage_phase_c": {
-                "name": "Voltage Phase C"
-            },
-            "wifi_network": {
-                "name": "WiFi Network"
-            }
-        },
-        "switch": {
-            "charging_state": {
-                "name": "Charging state"
-            },
-            "energy_limit_enabled": {
-                "name": "Energy limit enabled"
-            }
-        }
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
     }
+  },
+  "entity": {
+    "number": {
+      "current_set": {
+        "name": "User-set charging current"
+      },
+      "energy_limit": {
+        "name": "User-set energy-limit"
+      },
+      "phase_count": {
+        "name": "User-set maximum charge phases count"
+      }
+    },
+    "sensor": {
+      "rated_current": {
+        "name": "Max rated current"
+      },
+      "connector_phase_count": {
+        "name": "Phase count of the attachment"
+      },
+      "connector_max_current": {
+        "name": "Max current of the attachment in Ampere"
+      },
+      "connector_type": {
+        "name": "Attachment type"
+      },
+      "connector_serial": {
+        "name": "Attachment serial number"
+      },
+      "grid_voltage": {
+        "name": "Detected grid voltage"
+      },
+      "grid_frequency": {
+        "name": "Detected grid frequency"
+      },
+      "grid_phases": {
+        "name": "Connected phases on grid side"
+      },
+      "network_ip_address": {
+        "name": "IP-Address"
+      },
+      "network_mac_address": {
+        "name": "MAC-Address"
+      },
+      "network_ssid": {
+        "name": "WiFi name"
+      },
+      "network_rssi": {
+        "name": "Signal strength of the currently connected network"
+      },
+      "versions_sw_sm": {
+        "name": "Software version of SmartModule controller"
+      },
+      "versions_hw_sm": {
+        "name": "Hardware version of the SmartModule controller"
+      },
+      "versions_sw_ma": {
+        "name": "Software version of the Main controller"
+      },
+      "versions_hw_ma": {
+        "name": "Hardware Version of the Main controller"
+      },
+      "versions_sw_to": {
+        "name": "Software version of the Touch controller"
+      },
+      "versions_hw_to": {
+        "name": "Hardware version of the Touch controller"
+      },
+      "versions_sw_st": {
+        "name": "Software version of the Star controller"
+      },
+      "versions_hw_st": {
+        "name": "Hardware version of the Star controller"
+      },
+      "current_set": {
+        "name": "User-set charging current"
+      },
+      "charge_pause": {
+        "name": "Charge pause disabled / enabled"
+      },
+      "energy_limit": {
+        "name": "User-set energy-limit"
+      },
+      "phase_count": {
+        "name": "User-set maximum charge phases count"
+      },
+      "energy_total_charged_energy": {
+        "name": "Total charged energy overall"
+      },
+      "energy_charged_energy": {
+        "name": "Charged energy during most recent charge"
+      },
+      "powerflow_charging_voltage": {
+        "name": "Average of all phase-voltages"
+      },
+      "powerflow_charging_current": {
+        "name": "Max current signaled to EV"
+      },
+      "powerflow_grid_frequency": {
+        "name": "Current frequency"
+      },
+      "powerflow_peak_power": {
+        "name": "Highest power during most recent charge"
+      },
+      "powerflow_total_active_power": {
+        "name": "Active power of all phases combined"
+      },
+      "powerflow_total_reactive_power": {
+        "name": "Reactive power of all phases combined"
+      },
+      "powerflow_total_apparent_power": {
+        "name": "Apparent power of all phases combined"
+      },
+      "powerflow_total_total_power_factor": {
+        "name": "Power factor of all phases"
+      },
+      "powerflow_l1_voltage": {
+        "name": "Voltage L1"
+      },
+      "powerflow_l1_current": {
+        "name": "Current L1"
+      },
+      "powerflow_l1_active_power": {
+        "name": "Active power L1"
+      },
+      "powerflow_l1_reactive_power": {
+        "name": "Reactive power L1"
+      },
+      "powerflow_l1_apparent_power": {
+        "name": "Apparent power L1"
+      },
+      "powerflow_l1_power_factor": {
+        "name": "Power factor L1"
+      },
+      "powerflow_l2_voltage": {
+        "name": "Voltage L2"
+      },
+      "powerflow_l2_current": {
+        "name": "Current L2"
+      },
+      "powerflow_l2_active_power": {
+        "name": "Active power L2"
+      },
+      "powerflow_l2_reactive_power": {
+        "name": "Reactive power L2"
+      },
+      "powerflow_l2_apparent_power": {
+        "name": "Apparent power L2"
+      },
+      "powerflow_l2_power_factor": {
+        "name": "Power factor L2"
+      },
+      "powerflow_l3_voltage": {
+        "name": "Voltage L3"
+      },
+      "powerflow_l3_current": {
+        "name": "Current L3"
+      },
+      "powerflow_l3_active_power": {
+        "name": "Active power L3"
+      },
+      "powerflow_l3_reactive_power": {
+        "name": "Reactive power L3"
+      },
+      "powerflow_l3_apparent_power": {
+        "name": "Apparent power L3"
+      },
+      "powerflow_l3_power_factor": {
+        "name": "Power factor L3"
+      },
+      "powerflow_n_current": {
+        "name": "Current N"
+      },
+      "general_charging_rate": {
+        "name": "Charging rate with considered user defined average consumption of the EV in Kilometer per Hour"
+      },
+      "general_vehicle_connect_time": {
+        "name": "Connect time of the most recent charge"
+      },
+      "general_vehicle_charging_time": {
+        "name": "Charge time of the most recent charge"
+      },
+      "general_status": {
+        "name": "Charging status"
+      },
+      "general_charge_permitted": {
+        "name": "Tells whether if the EV is allowed to charge (1) or not (0)"
+      },
+      "general_relay_state": {
+        "name": "Current switched relais"
+      },
+      "general_charge_count": {
+        "name": "Vehicle plug-in cycle count"
+      },
+      "general_rcd_trigger": {
+        "name": "Signalizes if the RCD got triggered"
+      },
+      "general_warning_code": {
+        "name": "Shows currently reported warning"
+      },
+      "general_error_code": {
+        "name": "Shows currently reported error"
+      },
+      "temperatures_housing": {
+        "name": "NRGkick housing temperature"
+      },
+      "temperatures_connector_l1": {
+        "name": "Attachment phase1 temperature"
+      },
+      "temperatures_connector_l2": {
+        "name": "Attachment phase2 temperature"
+      },
+      "temperatures_connector_l3": {
+        "name": "Attachment phase3 temperature"
+      },
+      "temperatures_domestic_plug_1": {
+        "name": "Domestic attachment pin1 temperature"
+      },
+      "temperatures_domestic_plug_2": {
+        "name": "Domestic attachment pin2 temperature"
+      }
+    },
+    "switch": {
+      "charge_pause": {
+        "name": "Charge pause disabled / enabled"
+      }
+    }
+  }
 }
