@@ -1,127 +1,247 @@
 {
     "config": {
-        "abort": {
-            "already_configured": "Das Gerät wurde bereits eingerichtet"
+        "step": {
+            "user": {
+                "data": {
+                    "url": "URL",
+                    "login": "Login",
+                    "password": "Passwort"
+                }
+            }
         },
         "error": {
             "cannot_connect": "Verbindungsfehler",
             "invalid_auth": "Authentifizierung ungültig",
             "unknown": "Unerwarteter Fehler"
         },
-        "step": {
-            "user": {
-                "data": {
-                    "ip": "IP Adresse",
-                    "login": "Login",
-                    "password": "Password"
-                }
-            }
+        "abort": {
+            "already_configured": "Das Gerät wurde bereits eingerichtet"
         }
     },
     "entity": {
         "number": {
-            "charge_current_limit": {
-                "name": "Aktuelles Ladelimit"
+            "current_set": {
+                "name": "Aktuelle Ladeleistung"
             },
-            "phase_switch_value": {
-                "name": "Phasenumschaltung"
+            "energy_limit": {
+                "name": "Aktuelles Energielimit"
+            },
+            "phase_count": {
+                "name": "Aktuelle Anzahl aktiver Phasen"
             }
         },
         "sensor": {
-            "charge_current_max": {
-                "name": "Maximale Stromstärke"
-            },
-            "charge_current_max_adapter": {
-                "name": "Maximale Stromstärke der Wallbox"
-            },
-            "charge_current_min": {
-                "name": "Minimale Stromstärke"
-            },
-            "charge_current_user_set": {
-                "name": "Eingestellte Stromstärke durch Benutzer"
-            },
-            "charge_current_value": {
-                "name": "Aktuelle Stromstärke"
-            },
-            "charged_energy": {
-                "name": "Geladene Energie"
-            },
-            "charging_current_phase_a": {
-                "name": "Aktuelle Stromstärke Phase A"
-            },
-            "charging_current_phase_b": {
-                "name": "Aktuelle Stromstärke Phase B"
-            },
-            "charging_current_phase_c": {
-                "name": "Aktuelle Stromstärke Phase C"
-            },
-            "charging_power": {
-                "name": "Aktuelle Ladeleistung"
-            },
-            "charging_power_phase_a": {
-                "name": "Aktuelle Ladeleistung Phase A"
-            },
-            "charging_power_phase_b": {
-                "name": "Aktuelle Ladeleistung Phase B"
-            },
-            "charging_power_phase_c": {
-                "name": "Aktuelle Ladeleistung Phase C"
-            },
-            "charging_rate": {
+            "rated_current": {
                 "name": "Aktuelle Laderate"
             },
-            "charging_state": {
-                "name": "Ladestatus"
+            "connector_phase_count": {
+                "name": "Anzahl verfügbarer Phasen"
             },
-            "charging_voltage": {
-                "name": "Aktueller Spannung"
+            "connector_max_current": {
+                "name": "Maximale Stromstärke der Wallbox in Ampere"
             },
-            "control_pilot_status": {
-                "name": "Control Pilot Status"
+            "connector_type": {
+                "name": "Typ der Wallbox"
             },
-            "energy_limit_state": {
-                "name": "Einstellung Energielimit"
+            "connector_serial": {
+                "name": "Seriennummer der Wallbox"
             },
-            "energy_limit_max": {
-                "name": "Maximale Ladung"
-            },
-            "energy_limit_min": {
-                "name": "Minimale Ladung"
-            },
-            "energy_limit_value": {
-                "name": "Gesetzes Ladelimit"
+            "grid_voltage": {
+                "name": "Ermittelte Netzspannung"
             },
             "grid_frequency": {
-                "name": "Netzfrequenz"
+                "name": "Ermittelte Netzfrequenz"
             },
-            "peak_charging_power": {
-                "name": "Maximalleistung Peak"
+            "grid_phases": {
+                "name": "Verbundene Phasen zum Netz"
             },
-            "total_charged_energy": {
+            "network_ip_address": {
+                "name": "IP Adresse"
+            },
+            "network_mac_address": {
+                "name": "MAC Adresse"
+            },
+            "network_ssid": {
+                "name": "Name des Netzwerks"
+            },
+            "network_rssi": {
+                "name": "Signalstärke zu dem verbundenen Netzwerk"
+            },
+            "versions_sw_sm": {
+                "name": "Softwareversion des SmartModule Controllers"
+            },
+            "versions_hw_sm": {
+                "name": "Hardwareversion des SmartModule Controllers"
+            },
+            "versions_sw_ma": {
+                "name": "Softwareversion des Haupt Controllers"
+            },
+            "versions_hw_ma": {
+                "name": "Hardwareversion des Haupt Controllers"
+            },
+            "versions_sw_to": {
+                "name": "Softwareversion des Touch Controller"
+            },
+            "versions_hw_to": {
+                "name": "Hardwareversion des Touch Controller"
+            },
+            "versions_sw_st": {
+                "name": "Softwareversion des Star Controller"
+            },
+            "versions_hw_st": {
+                "name": "Hardwareversion des Star Controller"
+            },
+            "current_set": {
+                "name": "Aktuell eingestellte Ladeleistung"
+            },
+            "charge_pause": {
+                "name": "Ladepause inaktiv / aktiv"
+            },
+            "energy_limit": {
+                "name": "Aktuelle eingestelltes Energielimit"
+            },
+            "phase_count": {
+                "name": "Aktuelle Anzahl aktiver Phasen"
+            },
+            "energy_total_charged_energy": {
                 "name": "Geladene Energie gesamt"
             },
-            "total_charging_cycles": {
-                "name": "Anzahl Ladezyklen"
+            "energy_charged_energy": {
+                "name": "Geladene Energie des Ladevorgangs"
             },
-            "voltage_phase_a": {
-                "name": "Aktuelle Spannung Phase A"
+            "powerflow_charging_voltage": {
+                "name": "Aktueller Spannung"
             },
-            "voltage_phase_b": {
-                "name": "Aktuelle Spannung Phase B"
+            "powerflow_charging_current": {
+                "name": "Übermittelte maximale Ladeleistung an das EV"
             },
-            "voltage_phase_c": {
-                "name": "Aktuelle Spannung Phase C"
+            "powerflow_grid_frequency": {
+                "name": "Aktuelle Netzfrequenz"
             },
-            "wifi_network": {
-                "name": "WiFi Netzwerk"
+            "powerflow_peak_power": {
+                "name": "Maximalleistung Peak"
+            },
+            "powerflow_total_active_power": {
+                "name": "Aktuelle Ladeleistung (kombiniert über alle Phasen)"
+            },
+            "powerflow_total_reactive_power": {
+                "name": "Blindleistung (kombiniert über alle Phasen)"
+            },
+            "powerflow_total_apparent_power": {
+                "name": "Scheinleistung (kombiniert über alle Phasen)"
+            },
+            "powerflow_total_total_power_factor": {
+                "name": "Power-Faktor (kombiniert über alle Phasen)"
+            },
+            "powerflow_l1_voltage": {
+                "name": "Aktuelle Spannung L1"
+            },
+            "powerflow_l1_current": {
+                "name": "Aktuelle Stromstärke L1"
+            },
+            "powerflow_l1_active_power": {
+                "name": "Aktuelle Ladeleistung L1"
+            },
+            "powerflow_l1_reactive_power": {
+                "name": "Aktuelle Blindleistung L1"
+            },
+            "powerflow_l1_apparent_power": {
+                "name": "Aktuelle Scheinleistung L1"
+            },
+            "powerflow_l1_power_factor": {
+                "name": "Power-Faktor L1"
+            },
+            "powerflow_l2_voltage": {
+                "name": "Aktuelle Spannung L2"
+            },
+            "powerflow_l2_current": {
+                "name": "Aktuelle Stromstärke L2"
+            },
+            "powerflow_l2_active_power": {
+                "name": "Aktuelle Ladeleistung L2"
+            },
+            "powerflow_l2_reactive_power": {
+                "name": "Aktuelle Blindleistung L2"
+            },
+            "powerflow_l2_apparent_power": {
+                "name": "Aktuelle Scheinleistung L2"
+            },
+            "powerflow_l2_power_factor": {
+                "name": "Power-Faktor L2"
+            },
+            "powerflow_l3_voltage": {
+                "name": "Aktuelle Spannung L3"
+            },
+            "powerflow_l3_current": {
+                "name": "Aktuelle Stromstärke L3"
+            },
+            "powerflow_l3_active_power": {
+                "name": "Aktuelle Ladeleistung L3"
+            },
+            "powerflow_l3_reactive_power": {
+                "name": "Aktuelle Blindleistung L3"
+            },
+            "powerflow_l3_apparent_power": {
+                "name": "Aktuelle Scheinleistung L3"
+            },
+            "powerflow_l3_power_factor": {
+                "name": "Power-Faktor L3"
+            },
+            "powerflow_n_current": {
+                "name": "Aktueller N"
+            },
+            "general_charging_rate": {
+                "name": "Aktuelle Laderate in Km/h (Abhängig von dem eingestellten Verbrauch des EV)"
+            },
+            "general_vehicle_connect_time": {
+                "name": "Verbindungszeit des EV mit der Wallbox des aktuellen Ladevorgangs"
+            },
+            "general_vehicle_charging_time": {
+                "name": "Zeit des aktuellen Ladevorgang"
+            },
+            "general_status": {
+                "name": "Ladestatus"
+            },
+            "general_charge_permitted": {
+                "name": "Gibt an ob das EV laden darf (1) oder nicht (0)"
+            },
+            "general_relay_state": {
+                "name": "Aktuell geschaltete Relais"
+            },
+            "general_charge_count": {
+                "name": "Gesamtanzahl der Ladevorgänge"
+            },
+            "general_rcd_trigger": {
+                "name": "Gibt an ob das RCD ausgelöst wurde"
+            },
+            "general_warning_code": {
+                "name": "Aktuelle Warnung"
+            },
+            "general_error_code": {
+                "name": "Aktuelle Fehlercode"
+            },
+            "temperatures_housing": {
+                "name": "Gehäusetemperatur der Wallbox"
+            },
+            "temperatures_connector_l1": {
+                "name": "Wallbox L1 Temperatur"
+            },
+            "temperatures_connector_l2": {
+                "name": "Wallbox L2 Temperatur"
+            },
+            "temperatures_connector_l3": {
+                "name": "Wallbox L3 Temperatur"
+            },
+            "temperatures_domestic_plug_1": {
+                "name": "Innere Temperatur des Pin1 der Wallbox"
+            },
+            "temperatures_domestic_plug_2": {
+                "name": "Innere Temperatur des Pin2 der Wallbox"
             }
         },
         "switch": {
-            "charging_state": {
-                "name": "Ladestatus"
-            },
-            "energy_limit_enabled": {
-                "name": "Energielimit aktiviert"
+            "charge_pause": {
+                "name": "Ladepause deaktiviert / aktiviert"
             }
         }
     }
