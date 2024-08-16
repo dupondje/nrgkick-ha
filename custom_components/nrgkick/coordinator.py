@@ -65,7 +65,9 @@ class NRGKickCoordinator(DataUpdateCoordinator):
         """Set a value via the API."""
         params = {parameter: value}
         async with (
-            aiohttp.ClientSession() as session,
-            session.get(self._url + "/" + endpoint, params=params) as resp,
+            aiohttp.ClientSession(
+                base_url=self._url, auth=self._auth, timeout=aiohttp.ClientTimeout(5)
+            ) as session,
+            session.get("/" + endpoint, params=params) as resp,
         ):
             await resp.json()
