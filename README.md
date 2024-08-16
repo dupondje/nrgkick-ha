@@ -3,20 +3,15 @@
 A Home Assistant Integration to connect to your NRGKick device.
 
 
+## Requirements
+To be able to setup this integration, you need to have the IP address of the NRGKick.
+Within the App (at least version 1.7.7) you need to enable the native web api (JSON).
+And finally you need to have firmware version 4.0.0.64 on the NRGKick itself.
+
 ## Setup
-To be able to setup this integration, you need to have the IP address of the NRGKick and a UUID or the Serial Number.
+After installing the intergration in HA, you can configure your NRGkick in HA.
+The URL should be 'http://x.x.x.x' where x.x.x.x is replaced by the IP address of your NRGKick device.
+It might be good to make sure the IP address is statically configured on your network.
 
-### Serial Number
-Note down the last 7 numbers of the NRGKick's serial number before the 'SxDx'.
-With this number, you can configure the HA Integration.
-
-NOTE: If you configured a PIN code when you first configured the NRGKick app on your phone, you will need to use that PIN code instead of the 7 digits serial number.
-
-The setup phase will create a new unique UUID to be used for the NRGKick Integration in HA.
-
-### UUID
-This is the UUID which the NRGKick Android app uses to authenticate with your NRGKick device.
-
-The easiest way is to start a tcpdump capture of the traffic from your phone to the NRGKick.
-Open that capture in wireshark with the protobuf_websocket.lua plugin (https://github.com/dupondje/nrgkick-proto) enabled.
-And then you can easily find the UUID that is used.
+Eventually also configure the Login and Password you chose when configuring the web api via the
+NRGKick app.
