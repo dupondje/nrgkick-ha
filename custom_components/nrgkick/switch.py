@@ -39,7 +39,7 @@ SWITCHES: list[NRGKickSwitchEntityDescription] = [
     NRGKickSwitchEntityDescription(
         key="charge_pause",
         device_class=SwitchDeviceClass.SWITCH,
-        value_fn=lambda data: data["control"]["charge_pause"] == 0,
+        value_fn=lambda data: data["control"]["charge_pause"] == 1,
         switch_fn=lambda c, v: c.set("control", "charge_pause", v),
     ),
 ]
