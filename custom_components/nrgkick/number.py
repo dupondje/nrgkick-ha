@@ -96,7 +96,10 @@ class NRGKickNumber(NRGKickEntity, NumberEntity):
     @property
     def native_value(self) -> float | None:
         """Return the entity value to represent the entity state."""
-        return self.entity_description.value_fn(self.coordinator.data)
+        try:
+            return self.entity_description.value_fn(self.coordinator.data)
+        except KeyError:
+            return None
 
     @property
     def native_min_value(self) -> float:

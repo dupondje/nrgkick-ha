@@ -64,7 +64,10 @@ class NRGKickSwitch(NRGKickEntity, SwitchEntity):
     @property
     def is_on(self) -> bool:
         """Return the charging state."""
-        return self.entity_description.value_fn(self.coordinator.data)
+        try:
+            return self.entity_description.value_fn(self.coordinator.data)
+        except KeyError:
+            return False
 
     async def async_turn_on(self):
         """Turn on charging."""

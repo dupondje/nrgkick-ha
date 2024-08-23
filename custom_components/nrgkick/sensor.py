@@ -523,4 +523,7 @@ class NRGKickSensor(NRGKickEntity, SensorEntity):
     @property
     def native_value(self) -> StateType:
         """Return the value reported by the sensor."""
-        return self.entity_description.value_fn(self.coordinator.data)
+        try:
+            return self.entity_description.value_fn(self.coordinator.data)
+        except KeyError:
+            return None
