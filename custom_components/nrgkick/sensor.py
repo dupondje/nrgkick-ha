@@ -66,7 +66,9 @@ SENSORS = [
         device_class=SensorDeviceClass.CURRENT,
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         suggested_display_precision=2,
-        value_fn=lambda data: data["info"]["connector"]["max_current:"],
+        value_fn=lambda data: data["info"]["connector"]["max_current"]
+        if "max_current" in data["info"]["connector"]
+        else data["info"]["connector"]["max_current:"],
     ),
     NRGKickSensorEntityDescription(
         key="connector_type",
@@ -91,7 +93,9 @@ SENSORS = [
         device_class=SensorDeviceClass.FREQUENCY,
         native_unit_of_measurement=UnitOfFrequency.HERTZ,
         suggested_display_precision=2,
-        value_fn=lambda data: data["info"]["grid"]["frequency:"],
+        value_fn=lambda data: data["info"]["grid"]["frequency"]
+        if "frequency" in data["info"]["grid"]
+        else data["info"]["grid"]["frequency:"],
     ),
     NRGKickSensorEntityDescription(
         key="grid_phases",
@@ -271,7 +275,9 @@ SENSORS = [
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         suggested_display_precision=2,
-        value_fn=lambda data: data["values"]["powerflow"]["l1"]["voltage:"],
+        value_fn=lambda data: data["values"]["powerflow"]["l1"]["voltage"]
+        if "voltage" in data["values"]["powerflow"]["l1"]
+        else data["values"]["powerflow"]["l1"]["voltage:"],
     ),
     NRGKickSensorEntityDescription(
         key="powerflow_l1_current",
@@ -316,7 +322,9 @@ SENSORS = [
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         suggested_display_precision=2,
-        value_fn=lambda data: data["values"]["powerflow"]["l2"]["voltage:"],
+        value_fn=lambda data: data["values"]["powerflow"]["l2"]["voltage"]
+        if "voltage" in data["values"]["powerflow"]["l2"]
+        else data["values"]["powerflow"]["l2"]["voltage:"],
     ),
     NRGKickSensorEntityDescription(
         key="powerflow_l2_current",
@@ -361,7 +369,9 @@ SENSORS = [
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         suggested_display_precision=2,
-        value_fn=lambda data: data["values"]["powerflow"]["l3"]["voltage:"],
+        value_fn=lambda data: data["values"]["powerflow"]["l3"]["voltage"]
+        if "voltage" in data["values"]["powerflow"]["l3"]
+        else data["values"]["powerflow"]["l3"]["voltage:"],
     ),
     NRGKickSensorEntityDescription(
         key="powerflow_l3_current",
