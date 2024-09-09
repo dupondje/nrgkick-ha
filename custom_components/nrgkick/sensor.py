@@ -13,7 +13,6 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
-    POWER_VOLT_AMPERE_REACTIVE,
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
     UnitOfApparentPower,
     UnitOfElectricCurrent,
@@ -21,6 +20,7 @@ from homeassistant.const import (
     UnitOfEnergy,
     UnitOfFrequency,
     UnitOfPower,
+    UnitOfReactivePower,
     UnitOfTemperature,
     UnitOfTime,
 )
@@ -252,7 +252,7 @@ SENSORS = [
         key="powerflow_total_reactive_power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.REACTIVE_POWER,
-        native_unit_of_measurement=POWER_VOLT_AMPERE_REACTIVE,
+        native_unit_of_measurement=UnitOfReactivePower.VOLT_AMPERE_REACTIVE,
         value_fn=lambda data: data["values"]["powerflow"]["total_reactive_power"],
     ),
     NRGKickSensorEntityDescription(
@@ -299,7 +299,7 @@ SENSORS = [
         key="powerflow_l1_reactive_power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.REACTIVE_POWER,
-        native_unit_of_measurement=POWER_VOLT_AMPERE_REACTIVE,
+        native_unit_of_measurement=UnitOfReactivePower.VOLT_AMPERE_REACTIVE,
         value_fn=lambda data: data["values"]["powerflow"]["l1"]["reactive_power"],
     ),
     NRGKickSensorEntityDescription(
@@ -346,7 +346,7 @@ SENSORS = [
         key="powerflow_l2_reactive_power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.REACTIVE_POWER,
-        native_unit_of_measurement=POWER_VOLT_AMPERE_REACTIVE,
+        native_unit_of_measurement=UnitOfReactivePower.VOLT_AMPERE_REACTIVE,
         value_fn=lambda data: data["values"]["powerflow"]["l2"]["reactive_power"],
     ),
     NRGKickSensorEntityDescription(
@@ -393,7 +393,7 @@ SENSORS = [
         key="powerflow_l3_reactive_power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.REACTIVE_POWER,
-        native_unit_of_measurement=POWER_VOLT_AMPERE_REACTIVE,
+        native_unit_of_measurement=UnitOfReactivePower.VOLT_AMPERE_REACTIVE,
         value_fn=lambda data: data["values"]["powerflow"]["l3"]["reactive_power"],
     ),
     NRGKickSensorEntityDescription(
